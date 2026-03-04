@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Al-Barakah's Fresh Cut Fruits</title>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    body { padding-top: 72px; }
+
+    .page-hero {
+      background: linear-gradient(135deg, var(--green-dark), #1a4a1a);
+      padding: 52px 48px 40px; text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 50%, rgba(245,200,0,0.12) 0%, transparent 70%); }
+    .page-hero h1 { font-family:'Abril Fatface',serif; font-size:clamp(32px,5vw,52px); color:var(--yellow); position:relative; z-index:1; margin-bottom:8px; }
+    .page-hero p { color:rgba(255,255,255,0.6); font-size:15px; position:relative; z-index:1; }
+
+    .contact-section { padding: 72px 48px; }
+
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 32px; max-width: 1100px; margin: 0 auto;
+    }
+
+    .contact-card {
+      background: white; border-radius: 24px; padding: 36px;
+      border: 2px solid var(--border);
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .contact-card:hover { border-color: var(--yellow); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(245,200,0,0.12); }
+
+    .cc-icon { font-size: 48px; margin-bottom: 16px; display:block; }
+    .cc-title { font-family:'Abril Fatface',serif; font-size:22px; color:var(--green-dark); margin-bottom:6px; }
+    .cc-sub { font-size:13px; color:var(--ink-muted); margin-bottom:20px; line-height:1.6; }
+
+    .cc-link {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; border-radius: 14px; background: var(--cream);
+      text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 500;
+      transition: background 0.2s; margin-bottom: 10px;
+    }
+    .cc-link:hover { background: var(--green-light); color: var(--green-dark); }
+    .cc-link-icon { font-size: 22px; }
+    .cc-link-text small { display:block; font-size:11px; color:var(--ink-muted); font-weight:400; }
+
+    /* Slots */
+    .slots-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:8px; }
+    .slot-chip {
+      background: var(--green-light); border-radius:14px; padding:14px 12px; text-align:center;
+      border:1.5px solid rgba(45,106,45,0.2);
+    }
+    .slot-chip .sc-icon { font-size:22px; margin-bottom:4px; display:block; }
+    .slot-chip .sc-num { font-size:11px; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:0.5px; }
+    .slot-chip .sc-time { font-size:12px; font-weight:600; color:var(--green-dark); margin-top:2px; }
+
+    /* Full width card */
+    .contact-card.full { grid-column: 1 / -1; }
+
+    .address-big {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top:16px;
+    }
+    .ab-block { background:var(--cream); border-radius:16px; padding:20px 22px; }
+    .ab-block h4 { font-size:12px; font-weight:700; color:var(--green); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
+    .ab-block p { font-size:14px; line-height:2; color:var(--ink-soft); }
+    .ab-block p strong { color:var(--ink); font-weight:600; }
+
+    /* social big */
+    .social-big { display:grid; grid-template-columns: repeat(3,1fr); gap:14px; margin-top:8px; }
+    .sb-card {
+      border-radius:18px; padding:24px 20px; text-align:center;
+      text-decoration:none; transition:transform 0.2s, box-shadow 0.2s; color:white;
+    }
+    .sb-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.2); }
+    .sb-card .sb-icon { font-size:36px; margin-bottom:10px; display:block; }
+    .sb-card .sb-name { font-size:15px; font-weight:700; }
+    .sb-card .sb-handle { font-size:12px; opacity:0.8; margin-top:3px; }
+    .sb-ig { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+    .sb-fb { background: linear-gradient(135deg,#1877F2,#0d5abf); }
+    .sb-wa { background: linear-gradient(135deg,#25D366,#1a9e4a); }
+
+    @media(max-width:768px){
+      .contact-section { padding: 48px 20px; }
+      .contact-grid { grid-template-columns:1fr; }
+      .contact-card.full { grid-column:1; }
+      .address-big { grid-template-columns:1fr; }
+      .social-big { grid-template-columns:1fr; }
+      .slots-grid { grid-template-columns:1fr; }
+      .page-hero { padding:40px 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="brand">
+    <div class="brand-logo"><img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/></div>
+    <div class="brand-name">Al-Barakah's<small>Fresh Cut Fruits</small></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="order.html">Order</a>
+    <a href="cart.html" class="cart-nav-btn active">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>📞 Contact Us</h1>
+  <p>We'd love to hear from you — reach us any time!</p>
+</div>
+
+<section class="contact-section">
+  <div class="contact-grid">
+
+    <!-- Phone -->
+    <div class="contact-card reveal">
+      <span class="cc-icon">📞</span>
+      <div class="cc-title">Call / WhatsApp Us</div>
+      <div class="cc-sub">Reach us directly on phone or WhatsApp for orders and inquiries.</div>
+      <a href="tel:+918466949434" class="cc-link">
+        <span class="cc-link-icon">📱</span>
+        <div class="cc-link-text">+91 84669 49434 <small>Primary Number</small></div>
+      </a>
+      <a href="tel:+917337466536" class="cc-link">
+        <span class="cc-link-icon">📱</span>
+        <div class="cc-link-text">+91 73374 66536 <small>Alternate Number</small></div>
+      </a>
+      <a href="https://wa.me/918466949434" target="_blank" class="cc-link" style="background:#e8fff0">
+        <span class="cc-link-icon">💬</span>
+        <div class="cc-link-text" style="color:#1a7a3a">Chat on WhatsApp <small>Fastest response</small></div>
+      </a>
+    </div>
+
+    <!-- Delivery Slots -->
+    <div class="contact-card reveal d1">
+      <span class="cc-icon">⏰</span>
+      <div class="cc-title">Delivery Slots</div>
+      <div class="cc-sub">We deliver in 3 daily slots. Pre-book at least 1½ hours before your preferred slot.</div>
+      <div class="slots-grid">
+        <div class="slot-chip">
+          <span class="sc-icon">☀️</span>
+          <div class="sc-num">Slot 1</div>
+          <div class="sc-time">8:30 AM<br/>12:30 PM</div>
+        </div>
+        <div class="slot-chip">
+          <span class="sc-icon">🌅</span>
+          <div class="sc-num">Slot 2</div>
+          <div class="sc-time">1:30 PM<br/>5:00 PM</div>
+        </div>
+        <div class="slot-chip">
+          <span class="sc-icon">🌇</span>
+          <div class="sc-num">Slot 3</div>
+          <div class="sc-time">6:00 PM<br/>9:00 PM</div>
+        </div>
+      </div>
+      <div style="background:var(--yellow-light);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:13px;color:var(--green-dark);line-height:1.7">
+        ⚠️ Orders must be confirmed <strong>1½ hours before</strong> the slot. Only pre-confirmed orders are accepted.
+      </div>
+    </div>
+
+    <!-- Address + Hours full width -->
+    <div class="contact-card full reveal">
+      <span class="cc-icon">📍</span>
+      <div class="cc-title">Find Us & Business Hours</div>
+      <div class="address-big">
+        <div class="ab-block">
+          <h4>📍 Our Kitchen</h4>
+          <p>
+            <strong>Al-Barakah's Fresh Cut Fruits</strong><br/>
+            18-05-43, 3rd Line,<br/>
+            Kederaswarapeta,<br/>
+            Near Mango Market,<br/>
+            <strong>Vijayawada — 520003</strong><br/>
+            Andhra Pradesh, India
+          </p>
+        </div>
+        <div class="ab-block">
+          <h4>🕐 Business Hours</h4>
+          <p>
+            <strong>Monday – Saturday</strong><br/>
+            8:30 AM – 9:00 PM<br/><br/>
+            <strong>Sunday</strong><br/>
+            8:30 AM – 5:00 PM<br/><br/>
+            <strong>Delivery:</strong> FREE up to 3 km<br/>
+            ₹9 per km beyond 3 km
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Socials full width -->
+    <div class="contact-card full reveal">
+      <span class="cc-icon">🌐</span>
+      <div class="cc-title">Follow Us on Social Media</div>
+      <div class="cc-sub">Stay updated with our daily specials, offers and fresh arrivals!</div>
+      <div class="social-big">
+        <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRmS" target="_blank" class="sb-card sb-ig">
+          <span class="sb-icon">📸</span>
+          <div class="sb-name">Instagram</div>
+          <div class="sb-handle">@albarakahsfreshfruits</div>
+        </a>
+        <a href="https://facebook.com/albarakahsfreshfruits" target="_blank" class="sb-card sb-fb">
+          <span class="sb-icon">📘</span>
+          <div class="sb-name">Facebook</div>
+          <div class="sb-handle">Al-Barakah's Fresh Fruits</div>
+        </a>
+        <a href="https://wa.me/918466949434" target="_blank" class="sb-card sb-wa">
+          <span class="sb-icon">💬</span>
+          <div class="sb-name">WhatsApp</div>
+          <div class="sb-handle">+91 84669 49434</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Order CTA -->
+    <div class="contact-card full reveal" style="background:linear-gradient(135deg,var(--green-dark),#1a4a1a);border-color:transparent;text-align:center">
+      <span class="cc-icon">🍓</span>
+      <div class="cc-title" style="color:var(--yellow)">Ready to Order?</div>
+      <div class="cc-sub" style="color:rgba(255,255,255,0.6);max-width:400px;margin:0 auto 28px">Fresh fruit bowls made to order, delivered to your door. Place your order now!</div>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="order.html" class="btn-main">🍓 Order Now</a>
+        <a href="https://wa.me/918466949434" target="_blank" class="btn-outline" style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.3)">💬 WhatsApp Order</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="f-logo">Al-Barakah's 🍉</div><p>Fresh Cut Fruits delivered to your door. Handcrafted bowls made daily with love.</p></div>
+    <div class="footer-col"><h4>📍 Our Location</h4><div class="address-lines"><strong>Al-Barakah's Fresh Cut Fruits</strong><br/>18-05-43, 3rd Line,<br/>Kederaswarapeta, Near Mango Market,<br/>Vijayawada — 520003<br/><br/><strong>📞 8466949434 / 7337466536</strong></div></div>
+    <div class="footer-col"><h4>💬 Follow Us</h4><div class="social-list">
+      <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRm" class="social-item" target="_blank"><div class="sicon ig">📸</div><div><div style="color:white;font-size:14px;font-weight:500">Instagram</div><div>@albarakahsfreshfruits</div></div></a>
+      <a href="https://facebook.com/albarakahsfreshfruits" class="social-item" target="_blank"><div class="sicon fb">📘</div><div><div style="color:white;font-size:14px;font-weight:500">Facebook</div><div>Al-Barakah's</div></div></a>
+      <a href="https://wa.me/918466949434" class="social-item" target="_blank"><div class="sicon wa">💬</div><div><div style="color:white;font-size:14px;font-weight:500">WhatsApp</div><div>+91 84669 49434</div></div></a>
+    </div></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p><p>Made with 🍊 in Vijayawada</p></div>
+</footer>
+
+<script>
+  const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
+  document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+  const revEls = document.querySelectorAll('.reveal');
+  revEls.forEach(r=>{
+    new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+    },{threshold:0.08}).observe(r);
+  });
+</script>
+</body>
+</html>

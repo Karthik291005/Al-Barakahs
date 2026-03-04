@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order — Al-Barakah's Fresh Cut Fruits</title>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    body { padding-top: 72px; }
+
+    .page-hero {
+      background: linear-gradient(135deg, var(--green-dark), #1a4a1a);
+      padding: 52px 48px 40px; text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(245,200,0,0.12) 0%, transparent 70%);
+    }
+    .page-hero h1 {
+      font-family:'Abril Fatface',serif;
+      font-size:clamp(32px,5vw,52px); color:var(--yellow);
+      position:relative; z-index:1; margin-bottom:8px;
+    }
+    .page-hero p { color:rgba(255,255,255,0.6); font-size:15px; position:relative; z-index:1; }
+
+    .offer-strip {
+      background: linear-gradient(135deg, var(--red), #c0001e);
+      padding: 12px 48px; text-align: center;
+      color: white; font-size: 14px; font-weight: 700; letter-spacing: 0.5px;
+    }
+
+    /* ── SECTION HEADINGS ── */
+    .cat-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 36px;
+    }
+    .cat-header .cat-line { flex: 1; height: 2px; background: var(--border); }
+    .cat-title {
+      font-family: 'Abril Fatface', serif;
+      font-size: 26px; color: var(--green-dark);
+      white-space: nowrap; padding: 8px 24px;
+      background: var(--yellow); border-radius: 100px;
+    }
+
+    /* ── ITEMS GRID ── */
+    .items-section { padding: 60px 48px; }
+    .items-section:nth-child(even) { background: white; }
+    .items-section:nth-child(odd) { background: var(--cream); }
+
+    .items-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .item-card {
+      background: white; border-radius: 22px; overflow: hidden;
+      border: 2px solid var(--border);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative;
+    }
+    .item-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(45,106,45,0.15); border-color: var(--yellow); }
+
+    .item-badge {
+      position: absolute; top: 12px; right: 12px; z-index: 2;
+      padding: 4px 12px; border-radius: 100px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .badge-hot { background: var(--red); color: white; }
+    .badge-new { background: var(--green); color: white; }
+
+    .item-img {
+      height: 180px; display: flex; align-items: center; justify-content: center;
+      font-size: 72px; position: relative; overflow: hidden;
+    }
+    .bg-wm  { background: linear-gradient(135deg,#ffe0e0,#ff9999); }
+    .bg-mk  { background: linear-gradient(135deg,#fff0c0,#ffd060); }
+    .bg-bn  { background: linear-gradient(135deg,#fff8c0,#ffe060); }
+    .bg-pp  { background: linear-gradient(135deg,#ffd8b0,#ffaa60); }
+    .bg-sl  { background: linear-gradient(135deg,#e0ffe0,#a0ff80); }
+    .bg-pa  { background: linear-gradient(135deg,#ffe0c0,#ffb060); }
+    .bg-st  { background: linear-gradient(135deg,#ffd0d0,#ff8080); }
+    .bg-ap  { background: linear-gradient(135deg,#d0ffd0,#80e080); }
+    .bg-kw  { background: linear-gradient(135deg,#d0ffd0,#40c040); }
+    .bg-hy  { background: linear-gradient(135deg,#c0f0ff,#40c0ff); }
+    .bg-dg  { background: linear-gradient(135deg,#d0ffe0,#40e080); }
+    .bg-ff  { background: linear-gradient(135deg,#fff0c0,#ffc020); }
+    .bg-bb  { background: linear-gradient(135deg,#e0c0ff,#a000ff,#ff4080); }
+    .bg-gu  { background: linear-gradient(135deg,#ffe0c0,#ff8000); }
+    .bg-im  { background: linear-gradient(135deg,#d0ffe0,#00c060); }
+
+    .item-body { padding: 18px 20px 20px; }
+    .item-name {
+      font-family:'Abril Fatface',serif;
+      font-size: 18px; color: var(--green-dark); margin-bottom: 4px;
+    }
+    .item-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.6; margin-bottom: 14px; }
+
+    .size-select { margin-bottom: 14px; }
+    .size-select label { font-size: 11px; font-weight: 600; color:var(--green); letter-spacing:0.5px; text-transform:uppercase; display:block; margin-bottom:6px; }
+    .size-btns { display: flex; gap: 8px; }
+    .size-btn {
+      flex: 1; padding: 7px 0; border-radius: 8px;
+      border: 1.5px solid var(--border); background: transparent;
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      font-family:'Poppins',sans-serif; color: var(--ink-soft);
+      transition: all 0.2s;
+    }
+    .size-btn.active, .size-btn:hover { border-color: var(--green); background: var(--green-light); color: var(--green); }
+    .size-btn span { display:block; font-size:11px; font-weight:400; color:var(--ink-muted); }
+
+    .item-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 14px; border-top: 1px solid var(--border);
+    }
+    .item-price {
+      font-family:'Abril Fatface',serif;
+      font-size: 22px; color: var(--green-dark);
+    }
+    .item-price .old {
+      font-family:'Poppins',sans-serif;
+      font-size:13px; color:var(--ink-muted);
+      text-decoration:line-through; margin-left:4px;
+    }
+
+    .qty-ctrl { display: flex; align-items: center; gap: 10px; }
+    .qty-btn {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 2px solid var(--green); background: transparent;
+      color: var(--green); font-size: 18px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .qty-btn:hover { background: var(--green); color: white; }
+    .qty-num { font-size: 16px; font-weight: 700; min-width: 20px; text-align: center; }
+
+    .add-cart-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--yellow), #FFB300);
+      color: var(--green-dark); border: none;
+      font-size: 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-weight: 700; box-shadow: 0 3px 12px rgba(245,200,0,0.4);
+    }
+    .add-cart-btn:hover { transform: scale(1.15); box-shadow: 0 6px 20px rgba(245,200,0,0.5); }
+    .add-cart-btn.added { background: linear-gradient(135deg,#2D6A2D,#1E4A1E); color:white; }
+
+    /* view cart bar */
+    .floating-cart {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: var(--green-dark); color: white;
+      padding: 14px 32px; border-radius: 100px;
+      display: flex; align-items: center; gap: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3); z-index: 998;
+      transition: transform 0.4s ease; font-size: 14px; font-weight: 500;
+      text-decoration: none;
+    }
+    .floating-cart.visible { transform: translateX(-50%) translateY(0); }
+    .fc-count {
+      background: var(--yellow); color: var(--green-dark);
+      padding: 2px 10px; border-radius: 100px; font-weight: 700; font-size: 13px;
+    }
+
+    @media(max-width:768px){
+      .items-section { padding: 40px 20px; }
+      .page-hero { padding: 40px 24px 32px; }
+      .offer-strip { padding: 12px 24px; font-size:13px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="brand">
+    <div class="brand-logo">
+      <img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/>
+    </div>
+    <div class="brand-name">Al-Barakah's<small>Fresh Cut Fruits</small></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="order.html" class="active">Order</a>
+    <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>🍓 Order Fresh Bowls</h1>
+  <p>Hand-picked, freshly cut, delivered to your door</p>
+</div>
+<div class="offer-strip">🔥 10–25% OFF ON EVERYTHING! FREE delivery up to 3 km · Only ₹9/km after that</div>
+
+<!-- SOLO FRUIT BOWLS -->
+<section class="items-section" id="solo">
+  <div class="cat-header">
+    <div class="cat-line"></div>
+    <div class="cat-title">🍉 Solo Fruit Bowls</div>
+    <div class="cat-line"></div>
+  </div>
+  <div class="items-grid" id="soloGrid">
+
+    <div class="item-card reveal" data-name="Watermelon Bowl" data-prices='{"250g":45,"500g":69}' data-emoji="🍉">
+      <div class="item-badge badge-hot">🔥 Hot</div>
+      <div class="item-img bg-wm">🍉</div>
+      <div class="item-body">
+        <div class="item-name">Watermelon Bowl</div>
+        <div class="item-desc">Juicy watermelon chunks, freshly cut and chilled for you.</div>
+        <div class="size-select">
+          <label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹45</span></button>
+            <button class="size-btn" data-size="500g" onclick="selectSize(this)">500g<span>₹69</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">45</span> <span class="old">₹55</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+              <span class="qty-num">1</span>
+              <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+            </div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d1" data-name="Muskmelon Bowl" data-prices='{"250g":45,"500g":69}' data-emoji="🍈">
+      <div class="item-img bg-mk">🍈</div>
+      <div class="item-body">
+        <div class="item-name">Muskmelon Bowl</div>
+        <div class="item-desc">Sweet, aromatic muskmelon cut fresh every morning.</div>
+        <div class="size-select">
+          <label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹45</span></button>
+            <button class="size-btn" data-size="500g" onclick="selectSize(this)">500g<span>₹69</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">45</span> <span class="old">₹55</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+              <span class="qty-num">1</span>
+              <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+            </div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d2" data-name="Banana Bowl" data-prices='{"250g":45,"500g":69}' data-emoji="🍌">
+      <div class="item-img bg-bn">🍌</div>
+      <div class="item-body">
+        <div class="item-name">Banana Bowl</div>
+        <div class="item-desc">Fresh banana slices — energy-packed and naturally sweet.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹45</span></button>
+            <button class="size-btn" data-size="500g" onclick="selectSize(this)">500g<span>₹69</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">45</span> <span class="old">₹55</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d3" data-name="Papaya Bowl" data-prices='{"250g":45,"500g":69}' data-emoji="🧡">
+      <div class="item-img bg-pp">🧡</div>
+      <div class="item-body">
+        <div class="item-name">Papaya Bowl</div>
+        <div class="item-desc">Ripe papaya cubes — great for digestion and glowing skin.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹45</span></button>
+            <button class="size-btn" data-size="500g" onclick="selectSize(this)">500g<span>₹69</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">45</span> <span class="old">₹50</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d1" data-name="Sweet Lime Bowl" data-prices='{"250g":45,"500g":69}' data-emoji="🍋">
+      <div class="item-img bg-sl">🍋</div>
+      <div class="item-body">
+        <div class="item-name">Sweet Lime Bowl</div>
+        <div class="item-desc">Tangy sweet lime segments — refreshing Vitamin C boost.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹45</span></button>
+            <button class="size-btn" data-size="500g" onclick="selectSize(this)">500g<span>₹69</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">45</span> <span class="old">₹65</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d2" data-name="Pineapple Bowl" data-prices='{"250g":55,"500g":89}' data-emoji="🍍">
+      <div class="item-badge badge-hot">🔥 Hot</div>
+      <div class="item-img bg-pa">🍍</div>
+      <div class="item-body">
+        <div class="item-name">Pineapple Bowl</div>
+        <div class="item-desc">Tropical pineapple chunks — sweet, tangy, and incredibly fresh.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹55</span></button>
+            <button class="size-btn" data-size="500g" onclick="selectSize(this)">500g<span>₹89</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">55</span> <span class="old">₹70</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d3" data-name="Strawberry Bowl" data-prices='{"150g":79,"250g":129}' data-emoji="🍓">
+      <div class="item-badge badge-new">✨ Special</div>
+      <div class="item-img bg-st">🍓</div>
+      <div class="item-body">
+        <div class="item-name">Strawberry Bowl</div>
+        <div class="item-desc">Premium strawberries — vibrant, juicy & antioxidant-rich.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="150g" onclick="selectSize(this)">150g<span>₹79</span></button>
+            <button class="size-btn" data-size="250g" onclick="selectSize(this)">250g<span>₹129</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">79</span> <span class="old">₹99</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d1" data-name="Apple Bowl" data-prices='{"250g":89,"500g":149}' data-emoji="🍎">
+      <div class="item-img bg-ap">🍎</div>
+      <div class="item-body">
+        <div class="item-name">Apple Bowl</div>
+        <div class="item-desc">Crisp apple slices — an everyday classic full of fibre.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹89</span></button>
+            <button class="size-btn" data-size="500g" onclick="selectSize(this)">500g<span>₹149</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">89</span> <span class="old">₹99</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d2" data-name="Kiwi Bowl" data-prices='{"250g":99,"500g":179}' data-emoji="🥝">
+      <div class="item-badge badge-new">💚 Premium</div>
+      <div class="item-img bg-kw">🥝</div>
+      <div class="item-body">
+        <div class="item-name">Kiwi Bowl</div>
+        <div class="item-desc">Exotic kiwi slices — bursting with Vitamin C and flavour.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹99</span></button>
+            <button class="size-btn" data-size="500g" onclick="selectSize(this)">500g<span>₹179</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">99</span> <span class="old">₹129</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SPECIAL MIX BOWLS -->
+<section class="items-section" id="combo" style="background:white">
+  <div class="cat-header">
+    <div class="cat-line"></div>
+    <div class="cat-title">🥗 Special Mix Bowls</div>
+    <div class="cat-line"></div>
+  </div>
+  <div class="items-grid">
+
+    <div class="item-card reveal" data-name="Hydration Bowl" data-prices='{"250g":49,"450g":79}' data-emoji="💧">
+      <div class="item-badge badge-hot">💧 Hydrating</div>
+      <div class="item-img bg-hy">💧</div>
+      <div class="item-body">
+        <div class="item-name">Hydration Bowl</div>
+        <div class="item-desc">Watermelon, Sweet Lime & Muskmelon — your ultimate hydration combo.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹49</span></button>
+            <button class="size-btn" data-size="450g" onclick="selectSize(this)">450g<span>₹79</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">49</span> <span class="old">₹59</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d1" data-name="Digest Ease Bowl" data-prices='{"250g":59,"450g":89}' data-emoji="🌿">
+      <div class="item-img bg-dg">🌿</div>
+      <div class="item-body">
+        <div class="item-name">Digest Ease Bowl</div>
+        <div class="item-desc">Papaya, Pineapple & Muskmelon — nature's digestive remedy.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹59</span></button>
+            <button class="size-btn" data-size="450g" onclick="selectSize(this)">450g<span>₹89</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">59</span> <span class="old">₹69</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d2" data-name="Fit Fuel Bowl" data-prices='{"250g":59,"450g":99}' data-emoji="💪">
+      <div class="item-img bg-ff">💪</div>
+      <div class="item-body">
+        <div class="item-name">Fit Fuel Bowl</div>
+        <div class="item-desc">Apple, Banana & Papaya — power-packed for your active day.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹59</span></button>
+            <button class="size-btn" data-size="450g" onclick="selectSize(this)">450g<span>₹99</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">59</span> <span class="old">₹69</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d3" data-name="Blood Builder Bowl" data-prices='{"250g":69,"450g":119}' data-emoji="❤️">
+      <div class="item-badge badge-new">❤️ Iron Rich</div>
+      <div class="item-img" style="background:linear-gradient(135deg,#ffd0d8,#ff4060)">❤️</div>
+      <div class="item-body">
+        <div class="item-name">Blood Builder Bowl</div>
+        <div class="item-desc">Pomegranate, Apple & Papaya — rich in iron and antioxidants.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹69</span></button>
+            <button class="size-btn" data-size="450g" onclick="selectSize(this)">450g<span>₹119</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">69</span> <span class="old">₹79</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d1" data-name="Glow Up Bowl" data-prices='{"250g":99,"450g":159}' data-emoji="✨">
+      <div class="item-badge badge-hot">✨ Glow</div>
+      <div class="item-img bg-gu">✨</div>
+      <div class="item-body">
+        <div class="item-name">Glow Up Bowl</div>
+        <div class="item-desc">Orange, Kiwi & Strawberry — Vitamin C glow from within.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹99</span></button>
+            <button class="size-btn" data-size="450g" onclick="selectSize(this)">450g<span>₹159</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">99</span> <span class="old">₹119</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-card reveal d2" data-name="Immunity Shield Bowl" data-prices='{"250g":99,"450g":159}' data-emoji="🛡️">
+      <div class="item-badge badge-new">🛡️ Immunity</div>
+      <div class="item-img bg-im">🛡️</div>
+      <div class="item-body">
+        <div class="item-name">Immunity Shield Bowl</div>
+        <div class="item-desc">Kiwi, Orange, Apple & Pomegranate — your daily immunity armour.</div>
+        <div class="size-select"><label>Choose Size</label>
+          <div class="size-btns">
+            <button class="size-btn active" data-size="250g" onclick="selectSize(this)">250g<span>₹99</span></button>
+            <button class="size-btn" data-size="450g" onclick="selectSize(this)">450g<span>₹159</span></button>
+          </div>
+        </div>
+        <div class="item-footer">
+          <div class="item-price">₹<span class="price-val">99</span> <span class="old">₹129</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty(this,-1)">−</button><span class="qty-num">1</span><button class="qty-btn" onclick="changeQty(this,1)">+</button></div>
+            <button class="add-cart-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- floating cart bar -->
+<a href="cart.html" class="floating-cart" id="floatingCart">
+  🛒 View Cart — <span class="fc-count" id="fcCount">0 items</span> &nbsp;→
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="f-logo">Al-Barakah's 🍉</div><p>Fresh Cut Fruits delivered to your door. Handcrafted bowls made daily with love.</p></div>
+    <div class="footer-col"><h4>📍 Our Location</h4><div class="address-lines"><strong>Al-Barakah's Fresh Cut Fruits</strong><br/>18-05-43, 3rd Line,<br/>Kederaswarapeta, Near Mango Market,<br/>Vijayawada — 520003<br/><br/><strong>📞 8466949434 / 7337466536</strong></div></div>
+    <div class="footer-col"><h4>💬 Follow Us</h4><div class="social-list">
+      <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRm" class="social-item" target="_blank"><div class="sicon ig">📸</div><div><div style="color:white;font-size:14px;font-weight:500">Instagram</div><div>@albarakahsfreshfruits</div></div></a>
+      <a href="https://facebook.com/albarakahsfreshfruits" class="social-item" target="_blank"><div class="sicon fb">📘</div><div><div style="color:white;font-size:14px;font-weight:500">Facebook</div><div>Al-Barakah's</div></div></a>
+      <a href="https://wa.me/918466949434" class="social-item" target="_blank"><div class="sicon wa">💬</div><div><div style="color:white;font-size:14px;font-weight:500">WhatsApp</div><div>+91 84669 49434</div></div></a>
+    </div></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p><p>Made with 🍊 in Vijayawada</p></div>
+</footer>
+
+<script>
+  function selectSize(btn){
+    const card = btn.closest('.item-card');
+    const prices = JSON.parse(card.dataset.prices);
+    card.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const size = btn.dataset.size;
+    card.querySelector('.price-val').textContent = prices[size];
+  }
+
+  function changeQty(btn, delta){
+    const qtyEl = btn.parentElement.querySelector('.qty-num');
+    let q = parseInt(qtyEl.textContent) + delta;
+    if(q < 1) q = 1;
+    qtyEl.textContent = q;
+  }
+
+  function addToCart(btn){
+    const card = btn.closest('.item-card');
+    const name = card.dataset.name;
+    const emoji = card.dataset.emoji;
+    const activeSize = card.querySelector('.size-btn.active');
+    const size = activeSize ? activeSize.dataset.size : '250g';
+    const price = parseInt(card.querySelector('.price-val').textContent);
+    const qty = parseInt(card.querySelector('.qty-num').textContent);
+
+    let cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
+    const key = name + '_' + size;
+    const idx = cart.findIndex(i=>i.key===key);
+    if(idx>-1){ cart[idx].qty += qty; } else { cart.push({key,name,emoji,size,price,qty}); }
+    localStorage.setItem('albarakahCart', JSON.stringify(cart));
+
+    btn.textContent = '✓'; btn.classList.add('added');
+    setTimeout(()=>{ btn.textContent = '+'; btn.classList.remove('added'); }, 1400);
+
+    updateCartUI();
+  }
+
+  function updateCartUI(){
+    const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
+    const total = cart.reduce((s,i)=>s+i.qty,0);
+    document.getElementById('cartCount').textContent = total;
+    document.getElementById('fcCount').textContent = total + ' item' + (total!==1?'s':'');
+    const fc = document.getElementById('floatingCart');
+    fc.classList.toggle('visible', total > 0);
+  }
+
+  // Reveal
+  const revEls = document.querySelectorAll('.reveal');
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:0.06}).observe ? document.querySelectorAll('.reveal').forEach(r=>{
+    new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+    },{threshold:0.06}).observe(r);
+  }) : null;
+
+  updateCartUI();
+</script>
+</body>
+</html>

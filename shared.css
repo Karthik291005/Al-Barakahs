@@ -32,7 +32,7 @@ body {
 /* ── NAVBAR ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;flex-wrap: nowrap;
   padding: 0 48px; height: 72px;
   background: var(--green-dark);
   box-shadow: 0 4px 20px rgba(0,0,0,0.25);
@@ -297,10 +297,12 @@ cursor:pointer;
 }
 
 /* Mobile menu */
-
 @media (max-width:768px){
 
 nav{
+display:flex;
+align-items:center;
+justify-content:space-between;
 padding:0 16px;
 }
 
@@ -334,4 +336,17 @@ padding:10px 20px;
 margin-left:0;
 }
 
+}
+.brand{
+display:flex;
+align-items:center;
+gap:10px;
+flex-shrink:0;
+}
+.hamburger{
+display:none;
+font-size:28px;
+color:white;
+cursor:pointer;
+margin-left:auto;
 }

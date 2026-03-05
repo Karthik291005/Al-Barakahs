@@ -133,6 +133,69 @@
     }
     .buy-now-btn:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(37,211,102,0.5); }
 
+    /* UPI Modal */
+    .upi-modal-overlay {
+      display:none; position:fixed; inset:0; z-index:3000;
+      background:rgba(0,0,0,0.65); backdrop-filter:blur(4px);
+      align-items:center; justify-content:center; padding:20px;
+    }
+    .upi-modal-overlay.open { display:flex; }
+    .upi-modal {
+      background:white; border-radius:28px; width:100%; max-width:420px;
+      box-shadow:0 24px 80px rgba(0,0,0,0.3);
+      animation: fadeUp 0.35s ease;
+      overflow:hidden;
+    }
+    .upi-header {
+      background:linear-gradient(135deg,#1a1a2e,#16213e);
+      padding:24px 28px; text-align:center;
+    }
+    .upi-header h3 { font-family:'Abril Fatface',serif; font-size:20px; color:var(--yellow); margin-bottom:4px; }
+    .upi-header p { font-size:13px; color:rgba(255,255,255,0.55); }
+    .upi-amount {
+      font-family:'Abril Fatface',serif; font-size:32px; color:white;
+      margin:10px 0 4px;
+    }
+    .upi-id-display {
+      font-size:12px; color:rgba(255,255,255,0.45);
+      font-family:'Poppins',sans-serif;
+    }
+    .upi-apps {
+      padding:24px 28px;
+      display:grid; grid-template-columns:1fr 1fr; gap:12px;
+    }
+    .upi-app-btn {
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      padding:16px 12px; border-radius:16px; border:2px solid var(--border);
+      cursor:pointer; transition:all 0.2s; background:white; text-decoration:none;
+    }
+    .upi-app-btn:hover { border-color:var(--green); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.1); }
+    .upi-app-logo { width:52px; height:52px; object-fit:contain; border-radius:12px; }
+    .upi-app-name { font-size:13px; font-weight:700; color:var(--ink); }
+    .upi-app-desc { font-size:10px; color:var(--ink-muted); text-align:center; }
+    .upi-divider { padding:0 28px; }
+    .upi-divider hr { border:none; border-top:1px solid var(--border); margin:0; }
+    .upi-divider span {
+      display:block; text-align:center; font-size:11px;
+      color:var(--ink-muted); margin:-8px auto; background:white;
+      width:fit-content; padding:0 12px;
+    }
+    .upi-any-btn {
+      margin:16px 28px; width:calc(100% - 56px);
+      padding:14px; background:var(--cream); border:2px solid var(--border);
+      border-radius:14px; font-size:14px; font-weight:600; color:var(--ink);
+      cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .upi-any-btn:hover { border-color:var(--green); background:var(--green-light); }
+    .upi-footer { padding:0 28px 24px; }
+    .upi-skip {
+      width:100%; padding:12px; background:transparent; border:none;
+      font-size:13px; color:var(--ink-muted); cursor:pointer;
+      font-family:'Poppins',sans-serif; text-decoration:underline;
+      margin-top:8px;
+    }
+
     @media(max-width:900px){
       .cart-layout { grid-template-columns:1fr; padding:24px 20px; }
       .summary-col { position:static; }
@@ -214,6 +277,49 @@
   </div>
 </div>
 
+<!-- UPI APP SELECTOR MODAL -->
+<div class="upi-modal-overlay" id="upiModal">
+  <div class="upi-modal">
+    <div class="upi-header">
+      <h3>💳 Pay via UPI</h3>
+      <p>Choose your preferred UPI app</p>
+      <div class="upi-amount" id="upiAmount">₹0</div>
+      <div class="upi-id-display">UPI ID: 846694943@ybl</div>
+    </div>
+    <div class="upi-apps">
+      <a class="upi-app-btn" id="gpayBtn" href="#" onclick="openUpiApp('gpay')">
+        <img class="upi-app-logo" src="googlepay.jpg" alt="GPay"/>
+        <div class="upi-app-name">Google Pay</div>
+      </a>
+      <a class="upi-app-btn" id="phonepeBtn" href="#" onclick="openUpiApp('phonepe')">
+        <img class="upi-app-logo" src="phonepay.jpg" alt="PhonePe"/>
+        <div class="upi-app-name">PhonePe</div>
+      </a>
+      <a class="upi-app-btn" id="paytmBtn" href="#" onclick="openUpiApp('paytm')">
+        <img class="upi-app-logo" src="paytm.jpg" alt="Paytm"/>
+        <div class="upi-app-name">Paytm</div>
+      </a>
+      <a class="upi-app-btn" id="bhimBtn" href="#" onclick="openUpiApp('bhim')">
+        <img class="upi-app-logo" src="bhim.jpg" alt="BHIM"/>
+        <div class="upi-app-name">BHIM UPI</div>
+      </a>
+    </div>
+    <div class="upi-divider"><hr/><span>or scan to pay</span></div>
+    <div style="text-align:center; padding:16px 28px;">
+      <img src="scanner.jpg" alt="UPI QR Code" style="width:180px;height:180px;object-fit:contain;border-radius:16px;border:2px solid var(--border);padding:8px;background:white;"/>
+      <p style="font-size:12px;color:var(--ink-muted);margin-top:10px;">Scan with any UPI app to pay</p>
+    </div>
+    <div class="upi-footer">
+      <p style="font-size:12px;color:var(--ink-muted);text-align:center;margin-bottom:8px">
+        After payment, your order details will be sent to WhatsApp automatically.
+      </p>
+      <button class="upi-skip" onclick="skipUpiAndWhatsapp()">
+        Skip payment & confirm order via WhatsApp only
+      </button>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="footer-grid">
     <div class="footer-brand"><div class="f-logo">Al-Barakah's</div><p>Fresh Cut Fruits delivered to your door. Handcrafted bowls made daily with love.</p></div>
@@ -229,6 +335,18 @@
 
 <script>
   let selectedPayment = '';
+  const UPI_ID = "846694943@ybl";
+  const UPI_NAME = "Al-Barakah%20Fruits";
+  const WA_NUMBER = "918466949434";
+  let pendingWaMessage = '';
+  let pendingTotal = 0;
+
+  // ── Shop location (Kederaswarapeta, Vijayawada) ──
+  const SHOP_LAT = 16.5204;
+  const SHOP_LNG = 80.6160;
+
+  let deliveryCharge = 0;
+  let deliveryDistance = 0;
 
   function renderCart(){
     const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
@@ -251,7 +369,6 @@
     }
 
     const subtotal = cart.reduce((s,i)=>s+(i.price*i.qty),0);
-    const delivery = subtotal >= 200 ? 0 : 0; // free within 3km
 
     root.innerHTML = `
       <div class="cart-layout">
@@ -268,16 +385,10 @@
                 <span>₹${i.price * i.qty}</span>
               </div>
             `).join('')}
-            <div class="summary-row">
-              <span>Subtotal</span><span>₹${subtotal}</span>
-            </div>
-            <div class="summary-row">
-              <span>Delivery</span><span style="color:var(--green);font-weight:600">FREE (within 3km)</span>
-            </div>
-            <div class="summary-row total">
-              <span>Total</span><span>₹${subtotal}</span>
-            </div>
-            <div class="delivery-note">🚴 FREE delivery up to 3 km · ₹9/km after that · Pre-book 1½ hr before your slot</div>
+            <div class="summary-row"><span>Subtotal</span><span>₹${subtotal}</span></div>
+            <div class="summary-row"><span>Delivery</span><span style="color:var(--green);font-weight:600">📍 Calculated at checkout</span></div>
+            <div class="summary-row total"><span>Total</span><span>₹${subtotal}+</span></div>
+            <div class="delivery-note">🚴 FREE up to 3 km · ₹9/km beyond that · Your location is auto-detected at checkout</div>
           </div>
           <button class="btn-main" style="width:100%;justify-content:center;font-size:16px;padding:18px" onclick="openModal()">
             🛒 Proceed to Buy Now
@@ -355,6 +466,26 @@
     document.getElementById('payUpi').classList.toggle('selected', method==='UPI / Online');
   }
 
+  function calculateDistance(lat1, lon1, lat2, lon2){
+
+const R = 6371;
+
+const dLat = (lat2-lat1) * Math.PI/180;
+const dLon = (lon2-lon1) * Math.PI/180;
+
+const a =
+Math.sin(dLat/2) * Math.sin(dLat/2) +
+Math.cos(lat1*Math.PI/180) *
+Math.cos(lat2*Math.PI/180) *
+Math.sin(dLon/2) *
+Math.sin(dLon/2);
+
+const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+return R * c;
+
+}
+
   function placeOrder(){
     const name = document.getElementById('custName').value.trim();
     const address = document.getElementById('custAddress').value.trim();
@@ -368,24 +499,93 @@
     const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
     const subtotal = cart.reduce((s,i)=>s+(i.price*i.qty),0);
 
-    let msg = `🍉 *NEW ORDER — Al-Barakah's Fresh Fruits* 🍉\n\n`;
-    msg += `👤 *Name:* ${name}\n`;
-    msg += `📍 *Delivery Address:* ${address}\n`;
-    msg += `⏰ *Preferred Slot:* ${slot}\n`;
-    msg += `💳 *Payment Mode:* ${selectedPayment}\n\n`;
-    msg += `🛒 *Order Details:*\n`;
-    cart.forEach(i=>{ msg += `  • ${i.emoji} ${i.name} (${i.size}) × ${i.qty} = ₹${i.price*i.qty}\n`; });
-    msg += `\n💰 *Total Amount: ₹${subtotal}*\n`;
-    msg += `\n_Ordered via Al-Barakah's website_`;
+    navigator.geolocation.getCurrentPosition(function(position){
 
-    const encoded = encodeURIComponent(msg);
-    const waUrl = `https://wa.me/918466949434?text=${encoded}`;
+      const userLat = position.coords.latitude;
+      const userLng = position.coords.longitude;
 
-    localStorage.removeItem('albarakahCart');
-    closeModal();
-    window.open(waUrl, '_blank');
+      let deliveryDistance = calculateDistance(SHOP_LAT, SHOP_LNG, userLat, userLng);
+      let deliveryCharge = 0;
 
-    setTimeout(()=>{ renderCart(); }, 300);
+      if(deliveryDistance <= 3){
+        deliveryCharge = 0;
+      } else {
+        deliveryCharge = Math.ceil(deliveryDistance - 3) * 9;
+      }
+
+      const finalTotal = subtotal + deliveryCharge;
+
+      let msg = `🍉 *NEW ORDER — Al-Barakah's Fresh Fruits* 🍉\n\n`;
+      msg += `👤 *Name:* ${name}\n`;
+      msg += `📍 *Delivery Address:* ${address}\n`;
+      msg += `⏰ *Preferred Slot:* ${slot}\n`;
+      msg += `💳 *Payment Mode:* ${selectedPayment}\n\n`;
+      msg += `🛒 *Order Details:*\n`;
+      cart.forEach(i=>{ msg += `  • ${i.emoji} ${i.name} (${i.size}) × ${i.qty} = ₹${i.price*i.qty}\n`; });
+      msg += `\n📏 *Distance:* ${deliveryDistance.toFixed(2)} km\n`;
+      msg += `🚚 *Delivery Charge:* ${deliveryCharge === 0 ? 'FREE' : '₹' + deliveryCharge}\n`;
+      msg += `💰 *Final Amount: ₹${finalTotal}*\n`;
+      msg += `\n_Ordered via Al-Barakah's website_`;
+
+      pendingWaMessage = msg;
+      pendingTotal = finalTotal; // ✅ use finalTotal (includes delivery) for UPI
+
+      // Clear cart
+      localStorage.removeItem('albarakahCart');
+      closeModal();
+
+      if(selectedPayment === 'UPI / Online'){
+        document.getElementById('upiAmount').textContent = `₹${finalTotal}`; // ✅ show correct amount
+        document.getElementById('upiModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      } else {
+        sendWhatsApp();
+        setTimeout(()=>renderCart(), 300);
+      }
+
+    }, function(){
+      alert("⚠️ Unable to detect your location. Please enable location access and try again.");
+    }, { enableHighAccuracy: true, timeout: 10000 });
+  }
+
+  function buildUpiLink(app, amount){
+    const links = {
+      gpay:    `intent://pay?pa=${UPI_ID}&pn=${UPI_NAME}&am=${amount}&cu=INR&tn=Al-Barakah%20Order#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`,
+      phonepe: `intent://pay?pa=${UPI_ID}&pn=${UPI_NAME}&am=${amount}&cu=INR#Intent;scheme=upi;package=com.phonepe.app;end`,
+      paytm:   `intent://pay?pa=${UPI_ID}&pn=${UPI_NAME}&am=${amount}&cu=INR#Intent;scheme=upi;package=net.one97.paytm;end`,
+      bhim:    `intent://pay?pa=${UPI_ID}&pn=${UPI_NAME}&am=${amount}&cu=INR#Intent;scheme=upi;package=in.org.npci.upiapp;end`,
+    };
+    return links[app] || `upi://pay?pa=${UPI_ID}&pn=${UPI_NAME}&am=${amount}&cu=INR`;
+  }
+
+  function openUpiApp(app){
+    // Try to open the specific UPI app
+    const upiLink = buildUpiLink(app, pendingTotal);
+    window.location.href = upiLink;
+
+    // After 2.5s, send WhatsApp with order details
+    setTimeout(()=>{
+      sendWhatsApp();
+      closeUpiModal();
+      renderCart();
+    }, 2500);
+    return false;
+  }
+
+  function skipUpiAndWhatsapp(){
+    closeUpiModal();
+    sendWhatsApp();
+    renderCart();
+  }
+
+  function closeUpiModal(){
+    document.getElementById('upiModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function sendWhatsApp(){
+    const encoded = encodeURIComponent(pendingWaMessage);
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encoded}`, '_blank');
   }
 
   renderCart();

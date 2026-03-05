@@ -196,6 +196,56 @@
       margin-top:8px;
     }
 
+    /* Payment Confirmation Screen */
+    .paid-overlay {
+      display:none; position:fixed; inset:0; z-index:4000;
+      background:rgba(0,0,0,0.7); backdrop-filter:blur(6px);
+      align-items:center; justify-content:center; padding:20px;
+    }
+    .paid-overlay.open { display:flex; }
+    .paid-modal {
+      background:white; border-radius:28px; width:100%; max-width:420px;
+      box-shadow:0 24px 80px rgba(0,0,0,0.35);
+      animation: fadeUp 0.35s ease; overflow:hidden; text-align:center;
+    }
+    .paid-header {
+      background:linear-gradient(135deg,#1a4a1a,#0d2e0d);
+      padding:32px 28px 24px;
+    }
+    .paid-header .paid-icon { font-size:56px; display:block; margin-bottom:12px; }
+    .paid-header h3 { font-family:'Abril Fatface',serif; font-size:22px; color:var(--yellow); margin-bottom:6px; }
+    .paid-header p { font-size:13px; color:rgba(255,255,255,0.6); line-height:1.6; }
+    .paid-body { padding:24px 28px; }
+    .paid-notice {
+      background:#fff8e1; border:1.5px solid #f5c800;
+      border-radius:14px; padding:16px; margin-bottom:20px;
+      font-size:13px; color:#5a4000; line-height:1.8; text-align:left;
+    }
+    .paid-notice strong { color:#2D6A2D; font-weight:700; }
+    .paid-notice .notice-step {
+      display:flex; align-items:flex-start; gap:10px; margin-top:8px;
+    }
+    .paid-notice .step-num {
+      background:var(--green); color:white; border-radius:50%;
+      width:20px; height:20px; font-size:11px; font-weight:700;
+      display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;
+    }
+    .paid-confirm-btn {
+      width:100%; padding:18px; border-radius:14px; border:none;
+      background:linear-gradient(135deg,#25D366,#1a9e4a);
+      color:white; font-size:16px; font-weight:700;
+      cursor:pointer; font-family:'Poppins',sans-serif;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      box-shadow:0 6px 24px rgba(37,211,102,0.4);
+      transition:transform 0.2s, box-shadow 0.2s; margin-bottom:12px;
+    }
+    .paid-confirm-btn:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(37,211,102,0.5); }
+    .paid-cancel-btn {
+      width:100%; padding:12px; background:transparent; border:none;
+      font-size:13px; color:var(--ink-muted); cursor:pointer;
+      font-family:'Poppins',sans-serif; text-decoration:underline;
+    }
+
     @media(max-width:900px){
       .cart-layout { grid-template-columns:1fr; padding:24px 20px; }
       .summary-col { position:static; }
@@ -304,7 +354,7 @@
         <div class="upi-app-name">Google Pay</div>
       </a>
       <a class="upi-app-btn" id="phonepeBtn" href="#" onclick="openUpiApp('phonepe')">
-        <img class="upi-app-logo" src="phonepay.jpg" alt="PhonePe"/>
+        <img class="upi-app-logo" src="phonepe.jpg" alt="PhonePe"/>
         <div class="upi-app-name">PhonePe</div>
       </a>
       <a class="upi-app-btn" id="paytmBtn" href="#" onclick="openUpiApp('paytm')">
@@ -327,6 +377,44 @@
       </p>
       <button class="upi-skip" onclick="skipUpiAndWhatsapp()">
         Skip payment & confirm order via WhatsApp only
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENT CONFIRMATION SCREEN -->
+<div class="paid-overlay" id="paidOverlay">
+  <div class="paid-modal">
+    <div class="paid-header">
+      <span class="paid-icon">💸</span>
+      <h3>Did you complete the payment?</h3>
+      <p>Please confirm once your UPI payment is done so we can process your order.</p>
+    </div>
+    <div class="paid-body">
+      <div class="paid-notice">
+        <strong>📋 After clicking "I Have Paid" below:</strong>
+        <div class="notice-step">
+          <div class="step-num">1</div>
+          <span>WhatsApp will open with your full order details.</span>
+        </div>
+        <div class="notice-step">
+          <div class="step-num">2</div>
+          <span>Please <strong>take a screenshot</strong> of your payment transaction.</span>
+        </div>
+        <div class="notice-step">
+          <div class="step-num">3</div>
+          <span><strong>Upload the screenshot</strong> in the WhatsApp chat to confirm your payment.</span>
+        </div>
+        <div class="notice-step">
+          <div class="step-num">4</div>
+          <span>We will prepare your order once payment is verified. 🍉</span>
+        </div>
+      </div>
+      <button class="paid-confirm-btn" onclick="confirmPaid()">
+        ✅ I Have Paid — Confirm Order via WhatsApp
+      </button>
+      <button class="paid-cancel-btn" onclick="cancelPaid()">
+        ✕ I haven't paid yet — Go back
       </button>
     </div>
   </div>
@@ -571,17 +659,33 @@ return R * c;
   }
 
   function openUpiApp(app){
-    // Try to open the specific UPI app
     const upiLink = buildUpiLink(app, pendingTotal);
+    // Open UPI app
     window.location.href = upiLink;
-
-    // After 2.5s, send WhatsApp with order details
+    // After 2.5s (time for UPI app to open), close UPI modal and show confirmation screen
     setTimeout(()=>{
-      sendWhatsApp();
       closeUpiModal();
-      renderCart();
+      document.getElementById('paidOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
     }, 2500);
     return false;
+  }
+
+  function confirmPaid(){
+    // Customer confirmed payment — send WhatsApp with order + screenshot reminder
+    document.getElementById('paidOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    const screenshotMsg = pendingWaMessage + `\n\n📸 *Please upload your UPI payment screenshot in this chat to confirm your order.*`;
+    const encoded = encodeURIComponent(screenshotMsg);
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encoded}`, '_blank');
+    renderCart();
+  }
+
+  function cancelPaid(){
+    // Go back to UPI modal
+    document.getElementById('paidOverlay').classList.remove('open');
+    document.getElementById('upiModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
 
   function skipUpiAndWhatsapp(){

@@ -195,12 +195,143 @@ footer {
 }
 .btn-outline:hover { background: var(--green); color: white; }
 
-/* ── MOBILE ── */
-@media(max-width:768px){
-  nav { padding: 0 20px; }
-  .nav-links a:not(.cart-nav-btn) { display: none; }
-  .section { padding: 56px 20px; }
-  footer { padding: 40px 20px 24px; }
-  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+/* 📱 TABLET RESPONSIVE (≤1024px) */
+
+@media (max-width:1024px){
+
+  nav{
+    padding:0 24px;
+  }
+
+  .section{
+    padding:60px 24px;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+  }
+
+}
+
+/* 📱 MOBILE RESPONSIVE (≤768px) */
+
+@media (max-width:768px){
+
+  nav{
+    padding:0 16px;
+    height:64px;
+  }
+
+  .brand-name{
+    font-size:16px;
+  }
+
+  .nav-links{
+    gap:2px;
+  }
+
+  .nav-links a{
+    padding:6px 10px;
+    font-size:12px;
+  }
+
+  .cart-nav-btn{
+    padding:7px 14px !important;
+  }
+
+  .section{
+    padding:48px 20px;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+
+  .footer-bottom{
+    flex-direction:column;
+    gap:10px;
+    text-align:center;
+  }
+
+}
+	
+/* 📱 SMALL MOBILE (≤480px) */
+
+@media (max-width:480px){
+
+  nav{
+    flex-direction:column;
+    height:auto;
+    padding:12px 12px;
+  }
+
+  .brand{
+    margin-bottom:6px;
+  }
+
+  .nav-links{
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .nav-links a{
+    font-size:11px;
+    padding:6px 8px;
+  }
+
+  .cart-nav-btn{
+    padding:6px 12px !important;
+  }
+
+}
+
+/* Hamburger icon */
+
+.hamburger{
+display:none;
+font-size:28px;
+color:white;
+cursor:pointer;
+}
+
+/* Mobile menu */
+
+@media (max-width:768px){
+
+nav{
+padding:0 16px;
+}
+
+.hamburger{
+display:block;
+}
+
+.nav-links{
+position:absolute;
+top:72px;
+left:0;
+right:0;
+background:var(--green-dark);
+flex-direction:column;
+align-items:center;
+gap:12px;
+padding:20px 0;
+display:none;
+}
+
+.nav-links.show{
+display:flex;
+}
+
+.nav-links a{
+font-size:14px;
+padding:10px 20px;
+}
+
+.cart-nav-btn{
+margin-left:0;
+}
+
 }

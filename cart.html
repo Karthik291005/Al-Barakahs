@@ -28,7 +28,7 @@
 
     /* ── CART LAYOUT ── */
     .cart-layout {
-      display: grid; grid-template-columns: 1fr 380px;
+      display: grid; grid-template-columns: 1fr 350px;
       gap: 32px; padding: 48px; max-width: 1200px; margin: 0 auto;
     }
 
@@ -206,13 +206,25 @@
 
 <nav>
   <a href="index.html" class="brand">
-    <div class="brand-logo"><img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/></div>
-    <div class="brand-name">Al-Barakah's<small>Fresh Cut Fruits</small></div>
+    <div class="brand-logo">
+      <img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/>
+    </div>
+    <div class="brand-name">
+      Al-Barakah's
+      <small>Fresh Cut Fruits</small>
+    </div>
   </a>
-  <div class="nav-links">
+
+  <!-- Hamburger -->
+  <div class="hamburger" onclick="toggleMenu()">
+    ☰
+  </div>
+
+  <!-- Nav links -->
+  <div class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
     <a href="order.html">Order</a>
-    <a href="cart.html" class="cart-nav-btn active">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
+    <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
     <a href="contact.html">Contact</a>
   </div>
 </nav>
@@ -284,7 +296,7 @@
       <h3>💳 Pay via UPI</h3>
       <p>Choose your preferred UPI app</p>
       <div class="upi-amount" id="upiAmount">₹0</div>
-      <div class="upi-id-display">UPI ID: 846694943@ybl</div>
+      <div class="upi-id-display">UPI ID:bandakarthik16@okicici</div>
     </div>
     <div class="upi-apps">
       <a class="upi-app-btn" id="gpayBtn" href="#" onclick="openUpiApp('gpay')">
@@ -335,7 +347,7 @@
 
 <script>
   let selectedPayment = '';
-  const UPI_ID = "846694943@ybl";
+  const UPI_ID = "bandakarthik16@okicici";
   const UPI_NAME = "Al-Barakah%20Fruits";
   const WA_NUMBER = "918466949434";
   let pendingWaMessage = '';
@@ -589,6 +601,17 @@ return R * c;
   }
 
   renderCart();
+</script>
+<script>
+
+function toggleMenu(){
+
+const menu = document.getElementById("navLinks");
+
+menu.classList.toggle("show");
+
+}
+
 </script>
 </body>
 </html>

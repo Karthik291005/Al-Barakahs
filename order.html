@@ -179,13 +179,23 @@
 <nav>
   <a href="index.html" class="brand">
     <div class="brand-logo">
-      <img src="1772634680696_WhatsApp_Image_2026-03-04_at_10_22_53.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/>
+      <img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/>
     </div>
-    <div class="brand-name">Al-Barakah's<small>Fresh Cut Fruits</small></div>
+    <div class="brand-name">
+      Al-Barakah's
+      <small>Fresh Cut Fruits</small>
+    </div>
   </a>
-  <div class="nav-links">
+
+  <!-- Hamburger -->
+  <div class="hamburger" onclick="toggleMenu()">
+    ☰
+  </div>
+
+  <!-- Nav links -->
+  <div class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
-    <a href="order.html" class="active">Order</a>
+    <a href="order.html">Order</a>
     <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
     <a href="contact.html">Contact</a>
   </div>
@@ -661,6 +671,17 @@
   }) : null;
 
   updateCartUI();
+</script>
+<script>
+
+function toggleMenu(){
+
+const menu = document.getElementById("navLinks");
+
+menu.classList.toggle("show");
+
+}
+
 </script>
 </body>
 </html>

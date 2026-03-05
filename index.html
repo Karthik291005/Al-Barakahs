@@ -12,7 +12,7 @@
       background: linear-gradient(160deg, var(--green-dark) 0%, #1a4a1a 40%, #0d2e0d 100%);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center; padding: 100px 40px 60px;
+      text-align: center; padding: 100px 20px 60px;
       position: relative; overflow: hidden;
     }
 
@@ -21,7 +21,7 @@
       position: absolute; border-radius: 50%; pointer-events: none;
     }
     .hbc1 {
-      width: 600px; height: 600px;
+      width: 600px; height: 600px;	
       background: radial-gradient(circle, rgba(245,200,0,0.12) 0%, transparent 70%);
       top: -200px; right: -200px;
       animation: spin 30s linear infinite;
@@ -215,15 +215,22 @@
 <nav>
   <a href="index.html" class="brand">
     <div class="brand-logo">
-      <img src="logo.jpg.jpeg" alt="Al-Barakah's Logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/>
+      <img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/>
     </div>
     <div class="brand-name">
       Al-Barakah's
       <small>Fresh Cut Fruits</small>
     </div>
   </a>
-  <div class="nav-links">
-    <a href="index.html" class="active">Home</a>
+
+  <!-- Hamburger -->
+  <div class="hamburger" onclick="toggleMenu()">
+    ☰
+  </div>
+
+  <!-- Nav links -->
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
     <a href="order.html">Order</a>
     <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
     <a href="contact.html">Contact</a>
@@ -422,6 +429,17 @@
     entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
   },{threshold:0.08});
   revEls.forEach(r=>revObs.observe(r));
+</script>
+<script>
+
+function toggleMenu(){
+
+const menu = document.getElementById("navLinks");
+
+menu.classList.toggle("show");
+
+}
+
 </script>
 </body>
 </html>

@@ -79,14 +79,23 @@
     .sb-fb { background: linear-gradient(135deg,#1877F2,#0d5abf); }
     .sb-wa { background: linear-gradient(135deg,#25D366,#1a9e4a); }
 
+    @media(max-width:1024px){
+      .contact-section { padding: 56px 28px; }
+      .contact-grid { gap: 20px; }
+    }
     @media(max-width:768px){
-      .contact-section { padding: 48px 20px; }
-      .contact-grid { grid-template-columns:1fr; }
+      .contact-section { padding: 36px 16px; }
+      .contact-grid { grid-template-columns:1fr; gap:16px; }
       .contact-card.full { grid-column:1; }
-      .address-big { grid-template-columns:1fr; }
-      .social-big { grid-template-columns:1fr; }
-      .slots-grid { grid-template-columns:1fr; }
-      .page-hero { padding:40px 24px 32px; }
+      .address-big { grid-template-columns:1fr; gap:14px; }
+      .social-big { grid-template-columns:1fr; gap:12px; }
+      .slots-grid { grid-template-columns: repeat(3,1fr); gap:10px; }
+      .page-hero { padding:36px 20px 28px; }
+      .contact-card { padding: 24px 20px; }
+    }
+    @media(max-width:480px){
+      .slots-grid { grid-template-columns: 1fr; }
+      .social-big { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -245,11 +254,10 @@
     <div class="footer-col"><h4>📍 Our Location</h4><div class="address-lines"><strong>Al-Barakah's Fresh Cut Fruits</strong><br/>18-05-43, 3rd Line,<br/>Kederaswarapeta, Near Mango Market,<br/>Vijayawada — 520003<br/><br/><strong>📞 8466949434 / 7337466536</strong></div></div>
     <div class="footer-col"><h4>💬 Follow Us</h4><div class="social-list">
       <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRm" class="social-item" target="_blank"><div class="sicon ig">📸</div><div><div style="color:white;font-size:14px;font-weight:500">Instagram</div><div>@albarakahsfreshfruits</div></div></a>
-      <a href="https://facebook.com/albarakahsfreshfruits" class="social-item" target="_blank"><div class="sicon fb">📘</div><div><div style="color:white;font-size:14px;font-weight:500">Facebook</div><div>Al-Barakah's</div></div></a>
       <a href="https://wa.me/918466949434" class="social-item" target="_blank"><div class="sicon wa">💬</div><div><div style="color:white;font-size:14px;font-weight:500">WhatsApp</div><div>+91 84669 49434</div></div></a>
     </div></div>
   </div>
-  <div class="footer-bottom"><p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p><p>Made with 🍊 in Vijayawada</p></div>
+  <div class="footer-bottom"><p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p><p>Site was designed & developed by Banda Karthik</p></div>
 </footer>
 
 <script>

@@ -195,158 +195,89 @@ footer {
 }
 .btn-outline:hover { background: var(--green); color: white; }
 
-/* 📱 TABLET RESPONSIVE (≤1024px) */
+/* ── HAMBURGER ── */
+.hamburger {
+  display: none;
+  font-size: 26px;
+  color: white;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.hamburger:hover { background: rgba(255,255,255,0.1); }
 
-@media (max-width:1024px){
-
-  nav{
-    padding:0 24px;
-  }
-
-  .section{
-    padding:60px 24px;
-  }
-
-  .footer-grid{
-    grid-template-columns:1fr 1fr;
-    gap:32px;
-  }
-
+/* ═══════════════════════════════════════
+   TABLET  (≤1024px)
+═══════════════════════════════════════ */
+@media (max-width:1024px) {
+  nav { padding: 0 28px; }
+  .section { padding: 60px 32px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
 }
 
-/* 📱 MOBILE RESPONSIVE (≤768px) */
+/* ═══════════════════════════════════════
+   MOBILE  (≤768px)  — hamburger menu
+═══════════════════════════════════════ */
+@media (max-width:768px) {
 
-@media (max-width:768px){
-
-  nav{
-    padding:0 16px;
-    height:64px;
+  /* Nav */
+  nav {
+    padding: 0 16px;
+    height: 64px;
+    position: fixed;
+    flex-wrap: nowrap;
+  }
+  .hamburger { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 64px; left: 0; right: 0;
+    background: var(--green-dark);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px 20px;
+    gap: 4px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    z-index: 998;
+  }
+  .nav-links.show { display: flex; }
+  .nav-links a {
+    font-size: 15px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .cart-nav-btn {
+    margin-left: 0 !important;
+    justify-content: center;
+    padding: 12px 16px !important;
   }
 
-  .brand-name{
-    font-size:16px;
-  }
+  body { padding-top: 64px; }
 
-  .nav-links{
-    gap:2px;
-  }
+  /* Sections */
+  .section { padding: 48px 20px; }
 
-  .nav-links a{
-    padding:6px 10px;
-    font-size:12px;
-  }
-
-  .cart-nav-btn{
-    padding:7px 14px !important;
-  }
-
-  .section{
-    padding:48px 20px;
-  }
-
-  .footer-grid{
-    grid-template-columns:1fr;
-    gap:28px;
-  }
-
-  .footer-bottom{
-    flex-direction:column;
-    gap:10px;
-    text-align:center;
-  }
-
-}
-	
-/* 📱 SMALL MOBILE (≤480px) */
-
-@media (max-width:480px){
-
-  nav{
-    flex-direction:column;
-    height:auto;
-    padding:12px 12px;
-  }
-
-  .brand{
-    margin-bottom:6px;
-  }
-
-  .nav-links{
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-
-  .nav-links a{
-    font-size:11px;
-    padding:6px 8px;
-  }
-
-  .cart-nav-btn{
-    padding:6px 12px !important;
-  }
-
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  footer { padding: 40px 20px 24px; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
 }
 
-/* Hamburger icon */
+/* ═══════════════════════════════════════
+   SMALL MOBILE  (≤480px)
+═══════════════════════════════════════ */
+@media (max-width:480px) {
+  nav { padding: 0 12px; height: 60px; }
+  body { padding-top: 60px; }
+  .nav-links { top: 60px; }
+  .brand-name { font-size: 17px; }
+  .brand-logo { width: 40px; height: 40px; }
 
-.hamburger{
-display:none;
-font-size:28px;
-color:white;
-cursor:pointer;
-}
-
-/* Mobile menu */
-@media (max-width:768px){
-
-nav{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 16px;
-}
-
-.hamburger{
-display:block;
-}
-
-.nav-links{
-position:absolute;
-top:72px;
-left:0;
-right:0;
-background:var(--green-dark);
-flex-direction:column;
-align-items:center;
-gap:12px;
-padding:20px 0;
-display:none;
-}
-
-.nav-links.show{
-display:flex;
-}
-
-.nav-links a{
-font-size:14px;
-padding:10px 20px;
-}
-
-.cart-nav-btn{
-margin-left:0;
-}
-
-}
-.brand{
-display:flex;
-align-items:center;
-gap:10px;
-flex-shrink:0;
-}
-.hamburger{
-display:none;
-font-size:28px;
-color:white;
-cursor:pointer;
-margin-left:auto;
+  .btn-main, .btn-outline, .btn-green {
+    padding: 13px 24px;
+    font-size: 14px;
+  }
 }

@@ -166,10 +166,27 @@
       padding: 2px 10px; border-radius: 100px; font-weight: 700; font-size: 13px;
     }
 
+    @media(max-width:1024px){
+      .items-section { padding: 48px 28px; }
+      .items-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+    }
     @media(max-width:768px){
-      .items-section { padding: 40px 20px; }
-      .page-hero { padding: 40px 24px 32px; }
-      .offer-strip { padding: 12px 24px; font-size:13px; }
+      .items-section { padding: 36px 16px; }
+      .page-hero { padding: 36px 20px 28px; }
+      .offer-strip { padding: 10px 16px; font-size:13px; }
+      .items-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .item-img { height: 150px; }
+      .item-name { font-size: 16px; }
+      .item-body { padding: 14px 14px 16px; }
+      .cat-title { font-size: 20px; padding: 6px 18px; }
+      .floating-cart { width: calc(100% - 32px); left: 16px; transform: translateY(100px); border-radius: 16px; padding: 14px 20px; }
+      .floating-cart.visible { transform: translateY(0); }
+    }
+    @media(max-width:480px){
+      .items-grid { grid-template-columns: 1fr; }
+      .item-img { height: 180px; }
+      .item-footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .item-footer > div { width: 100%; justify-content: space-between; }
     }
   </style>
 </head>
@@ -594,10 +611,6 @@
           <div class="sicon ig">📸</div>
           <div><div style="color:white;font-size:14px;font-weight:500">Instagram</div><div>@albarakahsfreshfruits</div></div>
         </a>
-        <a href="https://facebook.com/albarakahsfreshfruits" class="social-item" target="_blank">
-          <div class="sicon fb">📘</div>
-          <div><div style="color:white;font-size:14px;font-weight:500">Facebook</div><div>Al-Barakah's</div></div>
-        </a>
         <a href="https://wa.me/918466949434" class="social-item" target="_blank">
           <div class="sicon wa">💬</div>
           <div><div style="color:white;font-size:14px;font-weight:500">WhatsApp</div><div>+91 84669 49434</div></div>
@@ -607,7 +620,7 @@
   </div>
   <div class="footer-bottom">
     <p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p>
-    <p>Made with 🍊 in Vijayawada</p>
+    <p>Site was designed & developed by Banda Karthik</p>
   </div>
 </footer>
 

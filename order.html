@@ -150,20 +150,59 @@
     .add-cart-btn:hover { transform: scale(1.15); box-shadow: 0 6px 20px rgba(245,200,0,0.5); }
     .add-cart-btn.added { background: linear-gradient(135deg,#2D6A2D,#1E4A1E); color:white; }
 
-    /* view cart bar */
+    /* ── FLOATING CART ── */
     .floating-cart {
-      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
-      background: var(--green-dark); color: white;
-      padding: 14px 32px; border-radius: 100px;
-      display: flex; align-items: center; gap: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3); z-index: 998;
-      transition: transform 0.4s ease; font-size: 14px; font-weight: 500;
-      text-decoration: none;
+      position: fixed; bottom: 28px; right: 28px;
+      background: linear-gradient(135deg, var(--green-dark), #163a16);
+      color: white; border-radius: 20px;
+      padding: 14px 22px 14px 16px;
+      display: flex; align-items: center; gap: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 2px rgba(245,200,0,0.3);
+      z-index: 998; text-decoration: none;
+      transform: translateY(120px) scale(0.9);
+      opacity: 0;
+      transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease, box-shadow 0.2s;
+      min-width: 200px;
     }
-    .floating-cart.visible { transform: translateX(-50%) translateY(0); }
-    .fc-count {
+    .floating-cart.visible {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    .floating-cart:hover {
+      box-shadow: 0 18px 50px rgba(0,0,0,0.4), 0 0 0 3px rgba(245,200,0,0.5);
+      transform: translateY(-3px) scale(1);
+    }
+    .fc-icon-wrap {
+      position: relative; flex-shrink: 0;
+    }
+    .fc-icon { font-size: 26px; display: block; }
+    .fc-badge {
+      position: absolute; top: -6px; right: -8px;
       background: var(--yellow); color: var(--green-dark);
-      padding: 2px 10px; border-radius: 100px; font-weight: 700; font-size: 13px;
+      width: 20px; height: 20px; border-radius: 50%;
+      font-size: 10px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--green-dark);
+      animation: none;
+    }
+    .fc-badge.pop { animation: fcPop 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes fcPop { 0%{transform:scale(1)} 50%{transform:scale(1.6)} 100%{transform:scale(1)} }
+    .fc-info { flex: 1; }
+    .fc-label { font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 400; line-height: 1; margin-bottom: 3px; }
+    .fc-summary { font-size: 15px; font-weight: 700; color: white; line-height: 1; }
+    .fc-total { font-size: 11px; color: var(--yellow); font-weight: 600; margin-top: 2px; }
+    .fc-arrow {
+      font-size: 18px; color: var(--yellow);
+      transition: transform 0.2s;
+    }
+    .floating-cart:hover .fc-arrow { transform: translateX(4px); }
+
+    @media(max-width:768px){
+      .floating-cart {
+        bottom: 16px; right: 16px; left: 16px;
+        border-radius: 16px; min-width: unset;
+        padding: 13px 18px 13px 14px;
+      }
     }
 
     @media(max-width:1024px){
@@ -581,9 +620,18 @@
   </div>
 </section>
 
-<!-- floating cart bar -->
+<!-- FLOATING CART -->
 <a href="cart.html" class="floating-cart" id="floatingCart">
-  🛒 View Cart — <span class="fc-count" id="fcCount">0 items</span> &nbsp;→
+  <div class="fc-icon-wrap">
+    <span class="fc-icon">🛒</span>
+    <span class="fc-badge" id="fcBadge">0</span>
+  </div>
+  <div class="fc-info">
+    <div class="fc-label">Your Cart</div>
+    <div class="fc-summary"><span id="fcCount">0 items</span></div>
+    <div class="fc-total">₹<span id="fcTotal">0</span> total</div>
+  </div>
+  <span class="fc-arrow">→</span>
 </a>
 
 <!-- FOOTER -->
@@ -611,6 +659,10 @@
           <div class="sicon ig">📸</div>
           <div><div style="color:white;font-size:14px;font-weight:500">Instagram</div><div>@albarakahsfreshfruits</div></div>
         </a>
+        <a href="https://facebook.com/albarakahsfreshfruits" class="social-item" target="_blank">
+          <div class="sicon fb">📘</div>
+          <div><div style="color:white;font-size:14px;font-weight:500">Facebook</div><div>Al-Barakah's</div></div>
+        </a>
         <a href="https://wa.me/918466949434" class="social-item" target="_blank">
           <div class="sicon wa">💬</div>
           <div><div style="color:white;font-size:14px;font-weight:500">WhatsApp</div><div>+91 84669 49434</div></div>
@@ -620,7 +672,7 @@
   </div>
   <div class="footer-bottom">
     <p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p>
-    <p>Site was designed & developed by Banda Karthik</p>
+    <p>Made with 🍊 in Vijayawada</p>
   </div>
 </footer>
 
@@ -667,8 +719,18 @@
   function updateCartUI(){
     const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
     const total = cart.reduce((s,i)=>s+i.qty,0);
+    const amount = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+
     document.getElementById('cartCount').textContent = total;
     document.getElementById('fcCount').textContent = total + ' item' + (total!==1?'s':'');
+    document.getElementById('fcTotal').textContent = amount;
+
+    const badge = document.getElementById('fcBadge');
+    badge.textContent = total;
+    badge.classList.remove('pop');
+    void badge.offsetWidth; // force reflow to restart animation
+    badge.classList.add('pop');
+
     const fc = document.getElementById('floatingCart');
     fc.classList.toggle('visible', total > 0);
   }

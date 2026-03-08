@@ -221,7 +221,51 @@
       .hero-actions { flex-direction: column; align-items: center; }
       .hero-actions a { width: 100%; max-width: 280px; justify-content: center; }
     }
+    /* Install App Button */
+    .install-btn {
+      display: none; align-items: center; gap: 7px;
+      background: linear-gradient(135deg, var(--yellow), #FFB300);
+      color: var(--green-dark); padding: 8px 16px; border-radius: 100px;
+      font-size: 12px; font-weight: 700; border: none; cursor: pointer;
+      font-family: 'Poppins', sans-serif; letter-spacing: 0.3px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(245,200,0,0.4);
+      white-space: nowrap; flex-shrink: 0;
+      animation: installPulse 2.5s ease-in-out infinite;
+    }
+    .install-btn.show { display: flex; }
+    .install-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245,200,0,0.55); }
+    @keyframes installPulse {
+      0%,100% { box-shadow: 0 4px 14px rgba(245,200,0,0.4); }
+      50% { box-shadow: 0 4px 24px rgba(245,200,0,0.75); }
+    }
+
+    /* iOS Install Banner */
+    .ios-banner {
+      display: none; position: fixed; bottom: 20px; left: 16px; right: 16px;
+      background: var(--green-dark); color: white; border-radius: 18px;
+      padding: 16px 18px; z-index: 9999;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      animation: fadeUp 0.4s ease;
+      border: 1.5px solid rgba(245,200,0,0.3);
+    }
+    .ios-banner.show { display: flex; align-items: flex-start; gap: 14px; }
+    .ios-banner-icon { font-size: 32px; flex-shrink: 0; margin-top: 2px; }
+    .ios-banner-text { flex: 1; font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.85); }
+    .ios-banner-text strong { color: var(--yellow); font-size: 14px; display: block; margin-bottom: 2px; }
+    .ios-banner-close {
+      background: rgba(255,255,255,0.15); border: none; color: white;
+      width: 28px; height: 28px; border-radius: 50%; font-size: 14px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
   </style>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#1E4A1E"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Al-Barakah's"/>
+  <link rel="apple-touch-icon" href="logo.jpg.jpeg"/>
 </head>
 <body>
 
@@ -237,6 +281,11 @@
     </div>
   </a>
 
+  <!-- Install App Button -->
+  <button class="install-btn" id="installBtn" onclick="installApp()">
+    📲 Install App
+  </button>
+
   <!-- Hamburger -->
   <div class="hamburger" onclick="toggleMenu()">
     ☰
@@ -250,6 +299,16 @@
     <a href="contact.html">Contact</a>
   </div>
 </nav>
+
+<!-- iOS Install Banner -->
+<div class="ios-banner" id="iosBanner">
+  <div class="ios-banner-icon">🍉</div>
+  <div class="ios-banner-text">
+    <strong>Install Al-Barakah's App!</strong>
+    Tap <strong style="color:white">Share 📤</strong> then <strong style="color:white">"Add to Home Screen"</strong> to install the app on your iPhone.
+  </div>
+  <button class="ios-banner-close" onclick="document.getElementById('iosBanner').classList.remove('show')">✕</button>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -402,7 +461,7 @@
   </div>
   <div class="footer-bottom">
     <p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p>
-    <p>Site was designed & developed by Banda Karthik</p>
+    <p>Made with 🍊 in Vijayawada</p>
   </div>
 </footer>
 
@@ -443,11 +502,52 @@
 <script>
 
 function toggleMenu(){
+  const menu = document.getElementById("navLinks");
+  menu.classList.toggle("show");
+}
 
-const menu = document.getElementById("navLinks");
+// ── PWA Install Logic ──
+let deferredPrompt = null;
 
-menu.classList.toggle("show");
+// Android / Desktop — browser fires this event
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBtn').classList.add('show');
+});
 
+function installApp() {
+  if (deferredPrompt) {
+    // Android / Desktop — show native install prompt
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((result) => {
+      if (result.outcome === 'accepted') {
+        document.getElementById('installBtn').classList.remove('show');
+      }
+      deferredPrompt = null;
+    });
+  } else {
+    // iOS — show manual instructions banner
+    document.getElementById('iosBanner').classList.add('show');
+  }
+}
+
+// Show install btn on iOS too (since beforeinstallprompt doesn't fire on iOS)
+const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandaloneMode = window.navigator.standalone;
+if (isIos && !isInStandaloneMode) {
+  document.getElementById('installBtn').classList.add('show');
+}
+
+// Hide install button after app is installed
+window.addEventListener('appinstalled', () => {
+  document.getElementById('installBtn').classList.remove('show');
+  deferredPrompt = null;
+});
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 
 </script>

@@ -150,59 +150,87 @@
     .add-cart-btn:hover { transform: scale(1.15); box-shadow: 0 6px 20px rgba(245,200,0,0.5); }
     .add-cart-btn.added { background: linear-gradient(135deg,#2D6A2D,#1E4A1E); color:white; }
 
-    /* ── FLOATING CART ── */
+    /* ── SWIGGY/ZOMATO STYLE FLOATING CART BAR ── */
     .floating-cart {
-      position: fixed; bottom: 28px; right: 28px;
-      background: linear-gradient(135deg, var(--green-dark), #163a16);
-      color: white; border-radius: 20px;
-      padding: 14px 22px 14px 16px;
-      display: flex; align-items: center; gap: 14px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 2px rgba(245,200,0,0.3);
+      position: fixed; bottom: 0; left: 0; right: 0;
       z-index: 998; text-decoration: none;
-      transform: translateY(120px) scale(0.9);
-      opacity: 0;
-      transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease, box-shadow 0.2s;
-      min-width: 200px;
+      padding: 12px 20px;
+      background: transparent;
+      pointer-events: none;
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
     }
     .floating-cart.visible {
-      transform: translateY(0) scale(1);
-      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
     }
-    .floating-cart:hover {
-      box-shadow: 0 18px 50px rgba(0,0,0,0.4), 0 0 0 3px rgba(245,200,0,0.5);
-      transform: translateY(-3px) scale(1);
+    .fc-inner {
+      background: linear-gradient(135deg, var(--green), #1a5c1a);
+      border-radius: 18px;
+      padding: 0;
+      display: flex; align-items: stretch;
+      box-shadow: 0 -4px 0 rgba(0,0,0,0.15), 0 8px 40px rgba(0,0,0,0.35);
+      overflow: hidden;
+      border: 1.5px solid rgba(245,200,0,0.25);
     }
-    .fc-icon-wrap {
-      position: relative; flex-shrink: 0;
+
+    /* Left — item count pill */
+    .fc-left {
+      background: rgba(0,0,0,0.2);
+      padding: 14px 18px;
+      display: flex; align-items: center; gap: 10px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
     }
-    .fc-icon { font-size: 26px; display: block; }
-    .fc-badge {
-      position: absolute; top: -6px; right: -8px;
+    .fc-qty-box {
       background: var(--yellow); color: var(--green-dark);
-      width: 20px; height: 20px; border-radius: 50%;
-      font-size: 10px; font-weight: 800;
+      width: 28px; height: 28px; border-radius: 8px;
+      font-size: 14px; font-weight: 800;
       display: flex; align-items: center; justify-content: center;
-      border: 2px solid var(--green-dark);
-      animation: none;
     }
-    .fc-badge.pop { animation: fcPop 0.35s cubic-bezier(0.34,1.56,0.64,1); }
-    @keyframes fcPop { 0%{transform:scale(1)} 50%{transform:scale(1.6)} 100%{transform:scale(1)} }
-    .fc-info { flex: 1; }
-    .fc-label { font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 400; line-height: 1; margin-bottom: 3px; }
-    .fc-summary { font-size: 15px; font-weight: 700; color: white; line-height: 1; }
-    .fc-total { font-size: 11px; color: var(--yellow); font-weight: 600; margin-top: 2px; }
+    .fc-qty-box.pop { animation: fcPop 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes fcPop { 0%{transform:scale(1)} 40%{transform:scale(1.45)} 100%{transform:scale(1)} }
+    .fc-items-label {
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9);
+      line-height: 1.2;
+    }
+    .fc-items-label small { display:block; font-size:11px; color:rgba(255,255,255,0.5); font-weight:400; }
+
+    /* Middle — total */
+    .fc-mid {
+      flex: 1; display: flex; align-items: center;
+      padding: 14px 16px; gap: 6px;
+    }
+    .fc-total-label { font-size: 12px; color: rgba(255,255,255,0.55); }
+    .fc-total-amt {
+      font-family: 'Abril Fatface', serif;
+      font-size: 20px; color: var(--yellow);
+    }
+
+    /* Right — CTA button */
+    .fc-right {
+      background: var(--yellow);
+      padding: 14px 22px;
+      display: flex; align-items: center; gap: 8px;
+      flex-shrink: 0;
+    }
+    .fc-cta {
+      font-size: 14px; font-weight: 800;
+      color: var(--green-dark); white-space: nowrap;
+    }
     .fc-arrow {
-      font-size: 18px; color: var(--yellow);
+      font-size: 16px; color: var(--green-dark);
       transition: transform 0.2s;
     }
-    .floating-cart:hover .fc-arrow { transform: translateX(4px); }
+    .floating-cart:hover .fc-arrow { transform: translateX(5px); }
 
     @media(max-width:768px){
-      .floating-cart {
-        bottom: 16px; right: 16px; left: 16px;
-        border-radius: 16px; min-width: unset;
-        padding: 13px 18px 13px 14px;
-      }
+      .floating-cart { padding: 10px 12px; }
+      .fc-left { padding: 13px 14px; gap: 8px; }
+      .fc-mid { padding: 13px 12px; }
+      .fc-right { padding: 13px 16px; }
+      .fc-total-amt { font-size: 18px; }
+      .fc-cta { font-size: 13px; }
     }
 
     @media(max-width:1024px){
@@ -243,6 +271,9 @@
     </div>
   </a>
 
+  <!-- Dark Mode Toggle -->
+  <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle Dark Mode"></button>
+
   <!-- Hamburger -->
   <div class="hamburger" onclick="toggleMenu()">
     ☰
@@ -253,6 +284,7 @@
     <a href="index.html">Home</a>
     <a href="order.html">Order</a>
     <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
+    
     <a href="contact.html">Contact</a>
   </div>
 </nav>
@@ -620,18 +652,25 @@
   </div>
 </section>
 
-<!-- FLOATING CART -->
+<!-- SWIGGY/ZOMATO STYLE FLOATING CART -->
 <a href="cart.html" class="floating-cart" id="floatingCart">
-  <div class="fc-icon-wrap">
-    <span class="fc-icon">🛒</span>
-    <span class="fc-badge" id="fcBadge">0</span>
+  <div class="fc-inner">
+    <div class="fc-left">
+      <div class="fc-qty-box" id="fcBadge">0</div>
+      <div class="fc-items-label">
+        <span id="fcCount">0 items</span>
+        <small>in your cart</small>
+      </div>
+    </div>
+    <div class="fc-mid">
+      <span class="fc-total-label">Total</span>
+      <span class="fc-total-amt">₹<span id="fcTotal">0</span></span>
+    </div>
+    <div class="fc-right">
+      <span class="fc-cta">View Cart</span>
+      <span class="fc-arrow">→</span>
+    </div>
   </div>
-  <div class="fc-info">
-    <div class="fc-label">Your Cart</div>
-    <div class="fc-summary"><span id="fcCount">0 items</span></div>
-    <div class="fc-total">₹<span id="fcTotal">0</span> total</div>
-  </div>
-  <span class="fc-arrow">→</span>
 </a>
 
 <!-- FOOTER -->
@@ -659,10 +698,7 @@
           <div class="sicon ig">📸</div>
           <div><div style="color:white;font-size:14px;font-weight:500">Instagram</div><div>@albarakahsfreshfruits</div></div>
         </a>
-        <a href="https://facebook.com/albarakahsfreshfruits" class="social-item" target="_blank">
-          <div class="sicon fb">📘</div>
-          <div><div style="color:white;font-size:14px;font-weight:500">Facebook</div><div>Al-Barakah's</div></div>
-        </a>
+        
         <a href="https://wa.me/918466949434" class="social-item" target="_blank">
           <div class="sicon wa">💬</div>
           <div><div style="color:white;font-size:14px;font-weight:500">WhatsApp</div><div>+91 84669 49434</div></div>
@@ -672,7 +708,7 @@
   </div>
   <div class="footer-bottom">
     <p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p>
-    <p>Made with 🍊 in Vijayawada</p>
+    <p>Designed &amp; Developed by Banda Karthik</p>
   </div>
 </footer>
 
@@ -728,11 +764,10 @@
     const badge = document.getElementById('fcBadge');
     badge.textContent = total;
     badge.classList.remove('pop');
-    void badge.offsetWidth; // force reflow to restart animation
+    void badge.offsetWidth;
     badge.classList.add('pop');
 
-    const fc = document.getElementById('floatingCart');
-    fc.classList.toggle('visible', total > 0);
+    document.getElementById('floatingCart').classList.toggle('visible', total > 0);
   }
 
   // Reveal
@@ -749,7 +784,13 @@
 </script>
 <script>
 
-function toggleMenu(){
+function toggleDark(){
+    document.body.classList.toggle("dark");
+    localStorage.setItem("darkMode", document.body.classList.contains("dark") ? "1" : "0");
+  }
+  if(localStorage.getItem("darkMode") === "1") document.body.classList.add("dark");
+
+  function toggleMenu(){
 
 const menu = document.getElementById("navLinks");
 

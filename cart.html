@@ -282,6 +282,9 @@
     </div>
   </a>
 
+  <!-- Dark Mode Toggle -->
+  <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle Dark Mode"></button>
+
   <!-- Hamburger -->
   <div class="hamburger" onclick="toggleMenu()">
     ☰
@@ -292,6 +295,7 @@
     <a href="index.html">Home</a>
     <a href="order.html">Order</a>
     <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
+    
     <a href="contact.html">Contact</a>
   </div>
 </nav>
@@ -325,6 +329,46 @@
       <div class="form-group">
         <label>📍 Delivery Address (with Landmark) *</label>
         <textarea id="custAddress" placeholder="House no., Street, Area, Landmark..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>🗺️ Select Your Area *</label>
+        <select id="custArea" onchange="updateDeliveryFromArea()">
+          <option value="">— Select your area —</option>
+          <optgroup label="🟢 FREE Delivery (0–3 km)">
+            <option value="Kederaswarapeta|0|0">Kederaswarapeta</option>
+            <option value="Mango Market|0|0.5">Mango Market</option>
+            <option value="Suryaraopeta|0|1">Suryaraopeta</option>
+            <option value="Krishnalanka|0|1.5">Krishnalanka</option>
+            <option value="Bandar Road|0|2">Bandar Road</option>
+            <option value="Governorpet|0|2.5">Governorpet</option>
+            <option value="Siddhartha Nagar|0|2.8">Siddhartha Nagar</option>
+          </optgroup>
+          <optgroup label="🟡 ₹18 Delivery (4–5 km)">
+            <option value="Patamata|18|4">Patamata</option>
+            <option value="Moghalrajpuram|18|4.5">Moghalrajpuram</option>
+            <option value="Benz Circle|18|4.5">Benz Circle</option>
+            <option value="Labbipet|18|5">Labbipet</option>
+            <option value="Vijayawada One|18|5">Vijayawada One</option>
+          </optgroup>
+          <optgroup label="🟠 ₹27 Delivery (6–7 km)">
+            <option value="Gunadala|27|6">Gunadala</option>
+            <option value="Gandhinagar|27|6">Gandhinagar</option>
+            <option value="Ramavarapadu|27|6.5">Ramavarapadu</option>
+            <option value="Penamaluru|27|7">Penamaluru</option>
+            <option value="Auto Nagar|27|7">Auto Nagar</option>
+          </optgroup>
+          <optgroup label="🔴 ₹36 Delivery (8–9 km)">
+            <option value="Kanuru|36|8">Kanuru</option>
+            <option value="Gollapudi|36|8.5">Gollapudi</option>
+            <option value="Nunna|36|9">Nunna</option>
+            <option value="Ajit Singh Nagar|36|8">Ajit Singh Nagar</option>
+          </optgroup>
+          <optgroup label="⚫ ₹45+ Delivery (10 km+)">
+            <option value="Ibrahimpatnam|45|10">Ibrahimpatnam</option>
+            <option value="Vijayawada Rural|45|12">Vijayawada Rural / Other</option>
+          </optgroup>
+        </select>
+        <div id="areaChargeTag" style="margin-top:8px;font-size:13px;font-weight:600;color:var(--green);display:none;"></div>
       </div>
       <div class="form-group">
         <label>⏰ Preferred Delivery Slot *</label>
@@ -443,10 +487,11 @@
     <div class="footer-col"><h4>📍 Our Location</h4><div class="address-lines"><strong>Al-Barakah's Fresh Cut Fruits</strong><br/>18-05-43, 3rd Line,<br/>Kederaswarapeta, Near Mango Market,<br/>Vijayawada — 520003<br/><br/><strong>📞 8466949434 / 7337466536</strong></div></div>
     <div class="footer-col"><h4>💬 Follow Us</h4><div class="social-list">
       <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRm" class="social-item" target="_blank"><div class="sicon ig">📸</div><div><div style="color:white;font-size:14px;font-weight:500">Instagram</div><div>@albarakahsfreshfruits</div></div></a>
+      
       <a href="https://wa.me/918466949434" class="social-item" target="_blank"><div class="sicon wa">💬</div><div><div style="color:white;font-size:14px;font-weight:500">WhatsApp</div><div>+91 84669 49434</div></div></a>
     </div></div>
   </div>
-  <div class="footer-bottom"><p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p><p>Site was designed & developed by Banda Karthik</p></div>
+  <div class="footer-bottom"><p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p><p>Designed &amp; Developed by Banda Karthik</p></div>
 </footer>
 
 <script>
@@ -502,9 +547,9 @@
               </div>
             `).join('')}
             <div class="summary-row"><span>Subtotal</span><span>₹${subtotal}</span></div>
-            <div class="summary-row"><span>Delivery</span><span style="color:var(--green);font-weight:600">📍 Calculated at checkout</span></div>
-            <div class="summary-row total"><span>Total</span><span>₹${subtotal}+</span></div>
-            <div class="delivery-note">🚴 FREE up to 3 km · ₹9/km beyond that · Your location is auto-detected at checkout</div>
+            <div class="summary-row"><span>Delivery</span><span id="deliveryDisplay" style="color:var(--green);font-weight:600">📍 Select area below</span></div>
+            <div class="summary-row total"><span>Total</span><span id="totalDisplay">₹${subtotal}+</span></div>
+            <div class="delivery-note">🚴 FREE up to 3 km · ₹9/km beyond · Select your area to see charge</div>
           </div>
           <button class="btn-main" style="width:100%;justify-content:center;font-size:16px;padding:18px" onclick="openModal()">
             🛒 Proceed to Buy Now
@@ -602,46 +647,73 @@ return R * c;
 
 }
 
+  // ── Area-based delivery charge ──
+  let selectedDeliveryCharge = 0;
+  let selectedAreaName = '';
+
+  function updateDeliveryFromArea(){
+    const sel = document.getElementById('custArea');
+    const val = sel.value;
+    const tag = document.getElementById('areaChargeTag');
+    const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
+    const subtotal = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+
+    if(!val){
+      selectedDeliveryCharge = 0;
+      selectedAreaName = '';
+      tag.style.display = 'none';
+      return;
+    }
+
+    const parts = val.split('|');
+    selectedAreaName = parts[0];
+    selectedDeliveryCharge = parseInt(parts[1]);
+    const km = parseFloat(parts[2]);
+
+    tag.style.display = 'block';
+    if(selectedDeliveryCharge === 0){
+      tag.innerHTML = `✅ FREE delivery to ${selectedAreaName} (~${km} km)`;
+      tag.style.color = 'var(--green)';
+    } else {
+      tag.innerHTML = `🚴 Delivery to ${selectedAreaName}: ₹${selectedDeliveryCharge} (~${km} km)`;
+      tag.style.color = '#e67e22';
+    }
+
+    // Update summary on cart page
+    const dd = document.getElementById('deliveryDisplay');
+    const td = document.getElementById('totalDisplay');
+    if(dd) dd.textContent = selectedDeliveryCharge === 0 ? '🎉 FREE' : '₹' + selectedDeliveryCharge;
+    if(td) td.textContent = '₹' + (subtotal + selectedDeliveryCharge);
+  }
+
   function placeOrder(){
     const name = document.getElementById('custName').value.trim();
     const address = document.getElementById('custAddress').value.trim();
+    const areaVal = document.getElementById('custArea').value;
     const slot = document.getElementById('custSlot').value;
 
     if(!name){ alert('Please enter your name.'); return; }
     if(!address){ alert('Please enter your delivery address.'); return; }
+    if(!areaVal){ alert('Please select your delivery area.'); return; }
     if(!slot){ alert('Please select a preferred delivery slot.'); return; }
     if(!selectedPayment){ alert('Please select a payment method.'); return; }
 
     const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
     const subtotal = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+    const deliveryCharge = selectedDeliveryCharge;
+    const finalTotal = subtotal + deliveryCharge;
 
-    navigator.geolocation.getCurrentPosition(function(position){
-
-      const userLat = position.coords.latitude;
-      const userLng = position.coords.longitude;
-
-      let deliveryDistance = calculateDistance(SHOP_LAT, SHOP_LNG, userLat, userLng);
-      let deliveryCharge = 0;
-
-      if(deliveryDistance <= 3){
-        deliveryCharge = 0;
-      } else {
-        deliveryCharge = Math.ceil(deliveryDistance - 3) * 9;
-      }
-
-      const finalTotal = subtotal + deliveryCharge;
-
-      let msg = `🍉 *NEW ORDER — Al-Barakah's Fresh Fruits* 🍉\n\n`;
-      msg += `👤 *Name:* ${name}\n`;
-      msg += `📍 *Delivery Address:* ${address}\n`;
-      msg += `⏰ *Preferred Slot:* ${slot}\n`;
-      msg += `💳 *Payment Mode:* ${selectedPayment}\n\n`;
-      msg += `🛒 *Order Details:*\n`;
-      cart.forEach(i=>{ msg += `  • ${i.emoji} ${i.name} (${i.size}) × ${i.qty} = ₹${i.price*i.qty}\n`; });
-      msg += `\n📏 *Distance:* ${deliveryDistance.toFixed(2)} km\n`;
-      msg += `🚚 *Delivery Charge:* ${deliveryCharge === 0 ? 'FREE' : '₹' + deliveryCharge}\n`;
-      msg += `💰 *Final Amount: ₹${finalTotal}*\n`;
-      msg += `\n_Ordered via Al-Barakah's website_`;
+    let msg = `🍉 *NEW ORDER — Al-Barakah's Fresh Fruits* 🍉\n\n`;
+    msg += `👤 *Name:* ${name}\n`;
+    msg += `📍 *Delivery Address:* ${address}\n`;
+    msg += `🗺️ *Area:* ${selectedAreaName}\n`;
+    msg += `⏰ *Preferred Slot:* ${slot}\n`;
+    msg += `💳 *Payment Mode:* ${selectedPayment}\n\n`;
+    msg += `🛒 *Order Details:*\n`;
+    cart.forEach(i=>{ msg += `  • ${i.emoji} ${i.name} (${i.size}) × ${i.qty} = ₹${i.price*i.qty}\n`; });
+    msg += `\n🚚 *Delivery Charge:* ${deliveryCharge === 0 ? 'FREE' : '₹' + deliveryCharge}\n`;
+    msg += `💰 *Final Amount: ₹${finalTotal}*\n`;
+    msg += `\n_Ordered via Al-Barakah's website_`;
 
       pendingWaMessage = msg;
       pendingTotal = finalTotal; // ✅ use finalTotal (includes delivery) for UPI
@@ -658,10 +730,6 @@ return R * c;
         sendWhatsApp();
         setTimeout(()=>renderCart(), 300);
       }
-
-    }, function(){
-      alert("⚠️ Unable to detect your location. Please enable location access and try again.");
-    }, { enableHighAccuracy: true, timeout: 10000 });
   }
 
   function buildUpiLink(app, amount){
@@ -724,7 +792,13 @@ return R * c;
 </script>
 <script>
 
-function toggleMenu(){
+function toggleDark(){
+    document.body.classList.toggle("dark");
+    localStorage.setItem("darkMode", document.body.classList.contains("dark") ? "1" : "0");
+  }
+  if(localStorage.getItem("darkMode") === "1") document.body.classList.add("dark");
+
+  function toggleMenu(){
 
 const menu = document.getElementById("navLinks");
 

@@ -195,8 +195,78 @@ footer {
 }
 .btn-outline:hover { background: var(--green); color: white; }
 
-/* ── HAMBURGER ── */
-.hamburger {
+/* ═══════════════════════════════════════
+   DARK MODE
+═══════════════════════════════════════ */
+body.dark {
+  --cream:       #0a0a0a;
+  --white:       #111111;
+  --ink:         #f0f0f0;
+  --ink-soft:    #cccccc;
+  --ink-muted:   #888888;
+  --border:      #2e2e2e;
+  --green-light: #0f1f0f;
+  --yellow-light:#1a1400;
+  background: #0a0a0a;
+  color: #f0f0f0;
+}
+body.dark section,
+body.dark .menu-section,
+body.dark .items-section,
+body.dark .contact-section { background: #0a0a0a !important; }
+body.dark .items-section:nth-child(even) { background: #111111 !important; }
+body.dark .items-section:nth-child(odd) { background: #0a0a0a !important; }
+body.dark .why-section { background: #FFF9F0 !important; }
+body.dark .why-section .section-title { color: var(--ink) !important; }
+body.dark .why-section .section-title span { color: var(--green) !important; }
+body.dark .why-section .section-tag { background: var(--yellow-light) !important; color: var(--green-dark) !important; border-color: rgba(45,106,45,0.2) !important; }
+body.dark .why-card { background: #0a0a0a !important; border-color: #2e2e2e !important; }
+body.dark .why-title { color: var(--green) !important; }
+body.dark .why-desc { color: #888888 !important; }
+body.dark .hero { background: linear-gradient(160deg, var(--green-dark) 0%, #1a4a1a 40%, #0d2e0d 100%) !important; }
+body.dark nav { background: #0d1a0d; }
+body.dark footer { background: var(--green-dark) !important; }
+body.dark .summary-box,
+body.dark .cart-item,
+body.dark .contact-card,
+body.dark .why-card,
+body.dark .item-card { background: #1e1e1e; border-color: #2e2e2e; }
+body.dark .form-group input,
+body.dark .form-group textarea,
+body.dark .form-group select { background: #1e1e1e; color: #f0f0f0; border-color: #2e2e2e; }
+body.dark .modal,
+body.dark .upi-modal,
+body.dark .paid-modal { background: #1e1e1e; }
+body.dark .modal-body { background: #1e1e1e; }
+body.dark .order-summary-mini { background: #2a2a2a; }
+body.dark .note-box { background: #2a2200; }
+body.dark .ab-block { background: #1a1a1a; }
+body.dark .pay-opt { background: #1e1e1e; border-color: #2e2e2e; }
+body.dark .pay-opt.selected { background: #1a2e1a; }
+body.dark .upi-app-btn { background: #1e1e1e; border-color: #2e2e2e; }
+body.dark .upi-app-name { color: #f0f0f0; }
+body.dark .section-title { color: #9ca3af; }
+body.dark .section-title span { color: var(--green); }
+body.dark .section-sub { color: #888888; }
+body.dark .section-tag { background: #2a2200; color: var(--yellow); border-color: #554400; }
+
+/* Dark toggle button */
+.dark-toggle {
+  width: 42px; height: 24px; border-radius: 100px;
+  background: rgba(255,255,255,0.15); border: none; cursor: pointer;
+  position: relative; transition: background 0.3s; flex-shrink: 0;
+  display: flex; align-items: center; padding: 3px;
+}
+.dark-toggle::after {
+  content: '☀️'; font-size: 14px; line-height: 1;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s; background: transparent;
+}
+body.dark .dark-toggle { background: rgba(245,200,0,0.25); }
+body.dark .dark-toggle::after { content: '🌙'; transform: translateX(18px); }
+
+/* ═══════════════════════════════════════
   display: none;
   font-size: 26px;
   color: white;

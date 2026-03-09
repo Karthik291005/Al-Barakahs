@@ -112,6 +112,9 @@
     </div>
   </a>
 
+  <!-- Dark Mode Toggle -->
+  <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle Dark Mode"></button>
+
   <!-- Hamburger -->
   <div class="hamburger" onclick="toggleMenu()">
     ☰
@@ -122,6 +125,7 @@
     <a href="index.html">Home</a>
     <a href="order.html">Order</a>
     <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
+    
     <a href="contact.html">Contact</a>
   </div>
 </nav>
@@ -221,11 +225,7 @@
           <div class="sb-name">Instagram</div>
           <div class="sb-handle">@albarakahsfreshfruits</div>
         </a>
-        <a href="https://facebook.com/albarakahsfreshfruits" target="_blank" class="sb-card sb-fb">
-          <span class="sb-icon">📘</span>
-          <div class="sb-name">Facebook</div>
-          <div class="sb-handle">Al-Barakah's Fresh Fruits</div>
-        </a>
+        
         <a href="https://wa.me/918466949434" target="_blank" class="sb-card sb-wa">
           <span class="sb-icon">💬</span>
           <div class="sb-name">WhatsApp</div>
@@ -254,10 +254,11 @@
     <div class="footer-col"><h4>📍 Our Location</h4><div class="address-lines"><strong>Al-Barakah's Fresh Cut Fruits</strong><br/>18-05-43, 3rd Line,<br/>Kederaswarapeta, Near Mango Market,<br/>Vijayawada — 520003<br/><br/><strong>📞 8466949434 / 7337466536</strong></div></div>
     <div class="footer-col"><h4>💬 Follow Us</h4><div class="social-list">
       <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRm" class="social-item" target="_blank"><div class="sicon ig">📸</div><div><div style="color:white;font-size:14px;font-weight:500">Instagram</div><div>@albarakahsfreshfruits</div></div></a>
+      
       <a href="https://wa.me/918466949434" class="social-item" target="_blank"><div class="sicon wa">💬</div><div><div style="color:white;font-size:14px;font-weight:500">WhatsApp</div><div>+91 84669 49434</div></div></a>
     </div></div>
   </div>
-  <div class="footer-bottom"><p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p><p>Site was designed & developed by Banda Karthik</p></div>
+  <div class="footer-bottom"><p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p><p>Designed &amp; Developed by Banda Karthik</p></div>
 </footer>
 
 <script>
@@ -272,7 +273,13 @@
 </script>
 <script>
 
-function toggleMenu(){
+function toggleDark(){
+    document.body.classList.toggle("dark");
+    localStorage.setItem("darkMode", document.body.classList.contains("dark") ? "1" : "0");
+  }
+  if(localStorage.getItem("darkMode") === "1") document.body.classList.add("dark");
+
+  function toggleMenu(){
 
 const menu = document.getElementById("navLinks");
 
@@ -282,4 +289,4 @@ menu.classList.toggle("show");
 
 </script>
 </body>
-</html>
+</html>ss

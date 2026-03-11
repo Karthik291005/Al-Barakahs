@@ -494,7 +494,7 @@
       <h3>💳 Pay via UPI</h3>
       <p>Complete your payment to confirm order</p>
       <div class="upi-amount" id="upiAmount">₹0</div>
-      <div class="upi-id-display">UPI ID: 8554b4d32b2143c3ad40@okaxis</div>
+      <div class="upi-id-display">UPI ID: 7337486536-2@ybl</div>
     </div>
 
     <!-- Tabs -->
@@ -525,7 +525,7 @@
         <img src="scanner.jpg.jpeg" alt="UPI QR Code"/>
         <p>Scan this QR with <strong>GPay, PhonePe, Paytm, BHIM</strong> or any UPI app</p>
         <div class="upi-id-copy" onclick="copyUpiId()">
-          📋 8554b4d32b2143c3ad40@okaxis &nbsp;(tap to copy)
+          📋 7337486536-2@ybl &nbsp;(tap to copy)
         </div>
         <p id="copyConfirm" style="font-size:12px;color:var(--green);font-weight:600;margin-top:8px;display:none;">✅ UPI ID copied!</p>
       </div>
@@ -606,8 +606,8 @@
 
 <script>
   let selectedPayment = '';
-  const UPI_ID = "8554b4d32b2143c3ad40@okaxis";
-  const UPI_ID_DISPLAY = "8554b4d32b2143c3ad40@okaxis";
+  const UPI_ID = "7337486536-2@ybl";
+  const UPI_ID_DISPLAY = "7337486536-2@ybl";
   const UPI_NAME = "Al-Barakah%20Fruits";
   const WA_NUMBER = "918466949434";
   let pendingWaMessage = '';
@@ -1053,8 +1053,7 @@
 
   function skipUpiAndWhatsapp(){
     closeUpiModal();
-    // Override payment mode to COD in the message since user skipped payment
-    pendingWaMessage = pendingWaMessage.replace('💳 *Payment Mode:* UPI / Online', '💳 *Payment Mode:* Cash on Delivery');
+    pendingWaMessage = pendingWaMessage.replace('*Payment Mode:* UPI / Online', '*Payment Mode:* Cash on Delivery');
     sendWhatsApp();
     renderCart();
   }

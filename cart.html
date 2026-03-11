@@ -329,6 +329,38 @@
       .paid-modal { border-radius: 20px; }
       .paid-body { padding: 18px 18px; }
     }
+
+    /* ── STICKY BOTTOM CART BAR ── */
+    body { padding-bottom: 80px; }
+    .bottom-cart-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 1500;
+      background: linear-gradient(135deg, var(--green-dark), #1a4a1a);
+      padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.2);
+    }
+    .bcb-left { display: flex; align-items: center; gap: 10px; }
+    .bcb-icon { font-size: 22px; position: relative; }
+    .bcb-badge {
+      position: absolute; top: -6px; right: -8px;
+      background: var(--yellow); color: #111; font-size: 10px;
+      font-weight: 800; border-radius: 50%; width: 18px; height: 18px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bcb-text { color: rgba(255,255,255,0.8); font-size: 13px; }
+    .bcb-text strong { color: white; font-size: 15px; display: block; }
+    .bcb-btn {
+      background: var(--yellow); color: #111; border: none;
+      padding: 10px 20px; border-radius: 12px; font-size: 14px;
+      font-weight: 800; cursor: pointer; font-family: 'Poppins', sans-serif;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .bcb-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
+    .bcb-btn:disabled {
+      background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.4);
+      cursor: not-allowed; box-shadow: none; transform: none;
+    }
   </style>
 </head>
 <body>
@@ -473,24 +505,14 @@
 
     <!-- Apps Tab -->
     <div class="upi-tab-panel active" id="panelApps">
-      <!-- Detecting spinner (shown briefly) -->
-      <div class="upi-detecting" id="upiDetecting">
-        <span class="detect-spinner">🔍</span>
-        <p>Checking for UPI apps on your device…</p>
-      </div>
-
-      <!-- Apps grid (shown after detection) -->
-      <div id="upiAppsGrid" style="display:none">
-        <div class="upi-apps" id="upiAppsContainer"></div>
-        <button class="upi-any-btn" onclick="openAnyUpi()">
-          📲 Open Any UPI App
+      <div style="padding: 28px 24px; text-align: center;">
+        <p style="font-size:13px;color:var(--ink-muted);margin-bottom:20px;line-height:1.7;">
+          Tap below to open your UPI app.<br/>Your device will show all available UPI apps.
+        </p>
+        <button class="upi-any-btn" style="width:100%;margin:0 0 12px;" onclick="openAnyUpi()">
+          📲 Open UPI App to Pay
         </button>
-      </div>
-
-      <!-- No apps found fallback -->
-      <div class="upi-no-apps" id="upiNoApps" style="display:none">
-        <p>😕 No UPI apps detected on this device.<br/>Please scan the QR code or use the UPI ID to pay.</p>
-        <button class="upi-any-btn" onclick="switchUpiTab('scan')">📷 Switch to QR Scanner</button>
+        <p style="font-size:11px;color:var(--ink-muted);">GPay · PhonePe · Paytm · BHIM · any UPI app</p>
       </div>
     </div>
 
@@ -556,6 +578,18 @@
       </button>
     </div>
   </div>
+</div>
+
+<!-- STICKY BOTTOM CART BAR -->
+<div class="bottom-cart-bar" id="bottomCartBar">
+  <div class="bcb-left">
+    <div class="bcb-icon">🛒<span class="bcb-badge" id="bcbCount">0</span></div>
+    <div class="bcb-text">
+      <strong id="bcbTotal">₹0</strong>
+      <span id="bcbLabel">Your cart</span>
+    </div>
+  </div>
+  <button class="bcb-btn" id="bcbBtn" onclick="openModal()" disabled>Add items</button>
 </div>
 
 <footer>
@@ -735,7 +769,7 @@
       closeUpiModal();
       document.getElementById('paidOverlay').classList.add('open');
       document.body.style.overflow = 'hidden';
-    }, 2500);
+    }, 6000);
   }
 
   function openAnyUpi() {
@@ -750,7 +784,7 @@
       closeUpiModal();
       document.getElementById('paidOverlay').classList.add('open');
       document.body.style.overflow = 'hidden';
-    }, 2500);
+    }, 6000);
   }
 
   function switchUpiTab(tab) {
@@ -764,7 +798,7 @@
     navigator.clipboard.writeText(UPI_ID_DISPLAY).then(() => {
       const el = document.getElementById('copyConfirm');
       el.style.display = 'block';
-      setTimeout(() => { el.style.display = 'none'; }, 2500);
+      setTimeout(() => { el.style.display = 'none'; }, 6000);
     }).catch(() => {
       // Fallback for older browsers
       const ta = document.createElement('textarea');
@@ -775,7 +809,7 @@
       document.body.removeChild(ta);
       const el = document.getElementById('copyConfirm');
       el.style.display = 'block';
-      setTimeout(() => { el.style.display = 'none'; }, 2500);
+      setTimeout(() => { el.style.display = 'none'; }, 6000);
     });
   }
 
@@ -831,6 +865,7 @@
         </div>
       </div>`;
 
+    updateBottomBar();
     const list = document.getElementById('itemsList');
     cart.forEach((item,idx)=>{
       const div = document.createElement('div');
@@ -853,6 +888,28 @@
         </div>`;
       list.appendChild(div);
     });
+  }
+
+  function updateBottomBar(){
+    const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
+    const count = cart.reduce((s,i)=>s+i.qty,0);
+    const subtotal = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+    const total = subtotal + selectedDeliveryCharge;
+
+    document.getElementById('bcbCount').textContent = count;
+    document.getElementById('bcbTotal').textContent = '\u20B9' + total;
+
+    const btn = document.getElementById('bcbBtn');
+    const label = document.getElementById('bcbLabel');
+    if(count === 0){
+      btn.textContent = 'Add items';
+      btn.disabled = true;
+      label.textContent = 'Your cart is empty';
+    } else {
+      btn.textContent = 'Checkout →';
+      btn.disabled = false;
+      label.textContent = count + (count===1?' item':' items');
+    }
   }
 
   function cartQty(idx, delta){
@@ -967,19 +1024,12 @@
     closeModal();
 
     if(selectedPayment === 'UPI / Online'){
-      // Reset UPI modal state
+      // Open UPI modal
       document.getElementById('upiAmount').textContent = `₹${finalTotal}`;
       document.getElementById('scannerAmount').textContent = finalTotal;
-      document.getElementById('upiDetecting').style.display = 'block';
-      document.getElementById('upiAppsGrid').style.display = 'none';
-      document.getElementById('upiNoApps').style.display = 'none';
       switchUpiTab('apps');
-
       document.getElementById('upiModal').classList.add('open');
       document.body.style.overflow = 'hidden';
-
-      // Start app detection
-      detectUpiApps();
     } else {
       sendWhatsApp();
       setTimeout(()=>renderCart(), 300);
@@ -1003,6 +1053,8 @@
 
   function skipUpiAndWhatsapp(){
     closeUpiModal();
+    // Override payment mode to COD in the message since user skipped payment
+    pendingWaMessage = pendingWaMessage.replace('💳 *Payment Mode:* UPI / Online', '💳 *Payment Mode:* Cash on Delivery');
     sendWhatsApp();
     renderCart();
   }
@@ -1018,6 +1070,7 @@
   }
 
   renderCart();
+  updateBottomBar();
 </script>
 <script>
   function toggleDark(){

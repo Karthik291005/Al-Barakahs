@@ -1,585 +1,992 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Al-Barakah's Fresh Cut Fruits</title>
-  <link rel="stylesheet" href="shared.css"/>
-  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
-  <link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png"/>
+  <link rel="stylesheet" href="shared.css" />
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="apple-touch-icon" href="/favicon-192.png">
+
+  <!-- Logo for Google -->
+  <meta property="og:image" content="/favicon-192.png">
   <style>
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
       background: linear-gradient(160deg, var(--green-dark) 0%, #1a4a1a 40%, #0d2e0d 100%);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center; padding: 100px 20px 60px;
-      position: relative; overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 60px;
+      position: relative;
+      overflow: hidden;
     }
 
     /* animated background circles */
     .hero-bg-circle {
-      position: absolute; border-radius: 50%; pointer-events: none;
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
     }
+
     .hbc1 {
-      width: 600px; height: 600px;	
-      background: radial-gradient(circle, rgba(245,200,0,0.12) 0%, transparent 70%);
-      top: -200px; right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(245, 200, 0, 0.12) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
       animation: spin 30s linear infinite;
     }
+
     .hbc2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 70%);
-      bottom: -100px; left: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+      bottom: -100px;
+      left: -100px;
       animation: spin 20s linear infinite reverse;
     }
+
     .hbc3 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(245,200,0,0.08) 0%, transparent 70%);
-      top: 40%; left: -80px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(245, 200, 0, 0.08) 0%, transparent 70%);
+      top: 40%;
+      left: -80px;
     }
 
     /* floating fruits */
-    .fruit { position: absolute; font-size: 42px; pointer-events: none; animation: float 5s ease-in-out infinite; }
-    .fr1{top:12%;left:5%;animation-delay:0s;font-size:36px}
-    .fr2{top:18%;right:7%;animation-delay:0.8s;font-size:48px}
-    .fr3{top:55%;left:4%;animation-delay:1.6s;font-size:32px}
-    .fr4{top:60%;right:5%;animation-delay:2.4s;font-size:44px}
-    .fr5{top:30%;left:2%;animation-delay:3.2s;font-size:28px}
-    .fr6{bottom:20%;right:3%;animation-delay:1.2s;font-size:38px}
-    .fr7{bottom:30%;left:8%;animation-delay:2s;font-size:34px}
-    .fr8{top:8%;left:30%;animation-delay:0.4s;font-size:24px}
+    .fruit {
+      position: absolute;
+      font-size: 42px;
+      pointer-events: none;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .fr1 {
+      top: 12%;
+      left: 5%;
+      animation-delay: 0s;
+      font-size: 36px
+    }
+
+    .fr2 {
+      top: 18%;
+      right: 7%;
+      animation-delay: 0.8s;
+      font-size: 48px
+    }
+
+    .fr3 {
+      top: 55%;
+      left: 4%;
+      animation-delay: 1.6s;
+      font-size: 32px
+    }
+
+    .fr4 {
+      top: 60%;
+      right: 5%;
+      animation-delay: 2.4s;
+      font-size: 44px
+    }
+
+    .fr5 {
+      top: 30%;
+      left: 2%;
+      animation-delay: 3.2s;
+      font-size: 28px
+    }
+
+    .fr6 {
+      bottom: 20%;
+      right: 3%;
+      animation-delay: 1.2s;
+      font-size: 38px
+    }
+
+    .fr7 {
+      bottom: 30%;
+      left: 8%;
+      animation-delay: 2s;
+      font-size: 34px
+    }
+
+    .fr8 {
+      top: 8%;
+      left: 30%;
+      animation-delay: 0.4s;
+      font-size: 24px
+    }
 
     .hero-logo {
-      width: 130px; height: 130px; border-radius: 50%;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
       border: 4px solid var(--yellow);
-      overflow: hidden; margin-bottom: 28px;
-      box-shadow: 0 0 0 8px rgba(245,200,0,0.15), 0 0 0 16px rgba(245,200,0,0.07);
+      overflow: hidden;
+      margin-bottom: 28px;
+      box-shadow: 0 0 0 8px rgba(245, 200, 0, 0.15), 0 0 0 16px rgba(245, 200, 0, 0.07);
       animation: fadeUp 0.8s 0.1s ease both;
       background: var(--yellow);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 50px;
     }
-    .hero-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+    .hero-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
 
     .hero-tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(245,200,0,0.15); border: 1px solid rgba(245,200,0,0.4);
-      color: var(--yellow); padding: 6px 18px; border-radius: 100px;
-      font-size: 12px; font-weight: 600; letter-spacing: 1.5px;
-      text-transform: uppercase; margin-bottom: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245, 200, 0, 0.15);
+      border: 1px solid rgba(245, 200, 0, 0.4);
+      color: var(--yellow);
+      padding: 6px 18px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
       animation: fadeUp 0.8s 0.2s ease both;
     }
+
     .hero-tag::before {
-      content:''; width:7px; height:7px; background:var(--yellow);
-      border-radius:50%; animation: pulse 1.5s infinite;
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--yellow);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
     }
 
     .hero-title {
       font-family: 'Abril Fatface', serif;
       font-size: clamp(52px, 9vw, 120px);
-      color: var(--yellow); line-height: 0.9;
-      letter-spacing: -2px; margin-bottom: 6px;
+      color: var(--yellow);
+      line-height: 0.9;
+      letter-spacing: -2px;
+      margin-bottom: 6px;
       animation: fadeUp 0.8s 0.3s ease both;
-      text-shadow: 0 4px 30px rgba(245,200,0,0.3);
+      text-shadow: 0 4px 30px rgba(245, 200, 0, 0.3);
     }
+
     .hero-title-sub {
       font-family: 'Abril Fatface', serif;
       font-size: clamp(20px, 3.5vw, 38px);
-      color: rgba(255,255,255,0.9); font-style: italic;
-      letter-spacing: 1px; margin-bottom: 22px;
+      color: rgba(255, 255, 255, 0.9);
+      font-style: italic;
+      letter-spacing: 1px;
+      margin-bottom: 22px;
       animation: fadeUp 0.8s 0.4s ease both;
     }
 
     .hero-offer {
       display: inline-block;
       background: linear-gradient(135deg, var(--red), #c0001e);
-      color: white; padding: 10px 28px; border-radius: 100px;
-      font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
-      margin-bottom: 36px; animation: fadeUp 0.8s 0.5s ease both;
-      box-shadow: 0 4px 20px rgba(232,25,44,0.4);
+      color: white;
+      padding: 10px 28px;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 36px;
+      animation: fadeUp 0.8s 0.5s ease both;
+      box-shadow: 0 4px 20px rgba(232, 25, 44, 0.4);
     }
 
     .hero-actions {
-      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
       animation: fadeUp 0.8s 0.6s ease both;
     }
 
     .hero-stats {
-      display: flex; gap: 40px; margin-top: 56px;
-      padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);
-      animation: fadeUp 0.8s 0.8s ease both; flex-wrap: wrap; justify-content: center;
+      display: flex;
+      gap: 40px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeUp 0.8s 0.8s ease both;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    .stat { text-align: center; }
-    .stat-n { font-family:'Abril Fatface',serif; font-size:32px; color:var(--yellow); }
-    .stat-l { font-size:11px; color:rgba(255,255,255,0.5); letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-n {
+      font-family: 'Abril Fatface', serif;
+      font-size: 32px;
+      color: var(--yellow);
+    }
+
+    .stat-l {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
 
     /* ── DELIVERY BANNER ── */
     .delivery-banner {
       background: linear-gradient(135deg, var(--yellow), #FFB300);
       padding: 18px 48px;
-      display: flex; align-items: center; justify-content: center; gap: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
       flex-wrap: wrap;
     }
+
     .db-item {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 14px; font-weight: 600; color: var(--green-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--green-dark);
     }
-    .db-icon { font-size: 22px; }
+
+    .db-icon {
+      font-size: 22px;
+    }
 
     /* ── MENU SECTION ── */
-    .menu-section { background: white; padding: 80px 48px; }
-    .menu-section .section-header { text-align: center; margin-bottom: 40px; }
+    .menu-section {
+      background: white;
+      padding: 80px 48px;
+    }
+
+    .menu-section .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
 
     .menu-scroll-wrapper {
-      position: relative; overflow: hidden;
+      position: relative;
+      overflow: hidden;
       border-radius: 24px;
       box-shadow: var(--shadow-lg);
     }
+
     .menu-scroll-track {
-      display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
-      scroll-behavior: smooth; gap: 0;
-      scrollbar-width: none; -ms-overflow-style: none;
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      gap: 0;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
-    .menu-scroll-track::-webkit-scrollbar { display: none; }
+
+    .menu-scroll-track::-webkit-scrollbar {
+      display: none;
+    }
 
     .menu-slide {
-      flex: 0 0 100%; scroll-snap-align: start;
+      flex: 0 0 100%;
+      scroll-snap-align: start;
       position: relative;
     }
+
     .menu-slide img {
-      width: 100%; display: block;
-      max-height: 780px; object-fit: contain;
+      width: 100%;
+      display: block;
+      max-height: 780px;
+      object-fit: contain;
       background: #fdf5e8;
     }
 
     .slide-label {
-      position: absolute; top: 16px; left: 16px;
-      background: var(--green); color: white;
-      padding: 6px 16px; border-radius: 100px;
-      font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--green);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
     .scroll-nav {
-      display: flex; align-items: center; justify-content: center;
-      gap: 12px; margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
     }
+
     .scroll-btn {
-      width: 44px; height: 44px; border-radius: 50%;
-      background: var(--green); color: white; border: none;
-      font-size: 18px; cursor: pointer; display: flex;
-      align-items: center; justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: background 0.2s, transform 0.2s;
     }
-    .scroll-btn:hover { background: var(--green-dark); transform: scale(1.1); }
-    .scroll-dots { display: flex; gap: 8px; }
-    .dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--border); cursor: pointer; transition: background 0.2s, transform 0.2s;
-    }
-    .dot.active { background: var(--green); transform: scale(1.3); }
 
-    .menu-cta { text-align: center; margin-top: 48px; }
-    .menu-cta p { font-size: 15px; color: var(--ink-muted); margin-bottom: 20px; }
+    .scroll-btn:hover {
+      background: var(--green-dark);
+      transform: scale(1.1);
+    }
+
+    .scroll-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .dot.active {
+      background: var(--green);
+      transform: scale(1.3);
+    }
+
+    .menu-cta {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .menu-cta p {
+      font-size: 15px;
+      color: var(--ink-muted);
+      margin-bottom: 20px;
+    }
 
     /* ── WHY US ── */
-    .why-section { background: var(--cream); }
-    .why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-top: 48px; }
+    .why-section {
+      background: var(--cream);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+
     .why-card {
-      background: white; border-radius: 20px; padding: 32px 24px;
-      border: 2px solid transparent; text-align: center;
+      background: white;
+      border-radius: 20px;
+      padding: 32px 24px;
+      border: 2px solid transparent;
+      text-align: center;
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
       cursor: default;
     }
-    .why-card:hover { border-color: var(--yellow); transform: translateY(-6px); box-shadow: 0 16px 40px rgba(245,200,0,0.15); }
-    .why-icon { font-size: 44px; margin-bottom: 16px; display:block; animation: bounce 3s ease-in-out infinite; }
-    .why-card:nth-child(2) .why-icon { animation-delay:0.4s }
-    .why-card:nth-child(3) .why-icon { animation-delay:0.8s }
-    .why-card:nth-child(4) .why-icon { animation-delay:1.2s }
-    .why-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--green-dark); }
-    .why-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.7; }
 
-    @media(max-width:1024px){
-      .hero { padding: 90px 24px 60px; }
-      .menu-section { padding: 60px 24px; }
-      .why-grid { grid-template-columns: repeat(2,1fr); }
-      .delivery-banner { padding: 16px 24px; gap: 20px; }
+    .why-card:hover {
+      border-color: var(--yellow);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(245, 200, 0, 0.15);
     }
-    @media(max-width:768px){
-      .hero { padding: 80px 20px 48px; min-height: auto; }
-      .hero-logo { width: 100px; height: 100px; }
-      .hero-stats { gap: 20px; margin-top: 36px; padding-top: 28px; }
-      .stat-n { font-size: 26px; }
-      .delivery-banner { flex-direction: column; gap: 12px; padding: 20px 16px; text-align:center; }
-      .menu-section { padding: 48px 16px; }
-      .why-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
-      .why-card { padding: 22px 16px; }
-      .fr3,.fr4,.fr5,.fr7 { display: none; }
+
+    .why-icon {
+      font-size: 44px;
+      margin-bottom: 16px;
+      display: block;
+      animation: bounce 3s ease-in-out infinite;
     }
-    @media(max-width:480px){
-      .why-grid { grid-template-columns: 1fr; }
-      .hero-stats { flex-direction: column; gap: 16px; }
-      .hero-actions { flex-direction: column; align-items: center; }
-      .hero-actions a { width: 100%; max-width: 280px; justify-content: center; }
+
+    .why-card:nth-child(2) .why-icon {
+      animation-delay: 0.4s
     }
+
+    .why-card:nth-child(3) .why-icon {
+      animation-delay: 0.8s
+    }
+
+    .why-card:nth-child(4) .why-icon {
+      animation-delay: 1.2s
+    }
+
+    .why-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--green-dark);
+    }
+
+    .why-desc {
+      font-size: 13px;
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+
+    @media(max-width:1024px) {
+      .hero {
+        padding: 90px 24px 60px;
+      }
+
+      .menu-section {
+        padding: 60px 24px;
+      }
+
+      .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .delivery-banner {
+        padding: 16px 24px;
+        gap: 20px;
+      }
+    }
+
+    @media(max-width:768px) {
+      .hero {
+        padding: 80px 20px 48px;
+        min-height: auto;
+      }
+
+      .hero-logo {
+        width: 100px;
+        height: 100px;
+      }
+
+      .hero-stats {
+        gap: 20px;
+        margin-top: 36px;
+        padding-top: 28px;
+      }
+
+      .stat-n {
+        font-size: 26px;
+      }
+
+      .delivery-banner {
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px 16px;
+        text-align: center;
+      }
+
+      .menu-section {
+        padding: 48px 16px;
+      }
+
+      .why-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .why-card {
+        padding: 22px 16px;
+      }
+
+      .fr3,
+      .fr4,
+      .fr5,
+      .fr7 {
+        display: none;
+      }
+    }
+
+    @media(max-width:480px) {
+      .why-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-actions a {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+      }
+    }
+
     /* Install App Button */
     .install-btn {
-      display: none; align-items: center; gap: 7px;
+      display: none;
+      align-items: center;
+      gap: 7px;
       background: linear-gradient(135deg, var(--yellow), #FFB300);
-      color: var(--green-dark); padding: 8px 16px; border-radius: 100px;
-      font-size: 12px; font-weight: 700; border: none; cursor: pointer;
-      font-family: 'Poppins', sans-serif; letter-spacing: 0.3px;
+      color: var(--green-dark);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: 0.3px;
       transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 14px rgba(245,200,0,0.4);
-      white-space: nowrap; flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(245, 200, 0, 0.4);
+      white-space: nowrap;
+      flex-shrink: 0;
       animation: installPulse 2.5s ease-in-out infinite;
     }
-    .install-btn.show { display: flex; }
-    .install-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245,200,0,0.55); }
+
+    .install-btn.show {
+      display: flex;
+    }
+
+    .install-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(245, 200, 0, 0.55);
+    }
+
     @keyframes installPulse {
-      0%,100% { box-shadow: 0 4px 14px rgba(245,200,0,0.4); }
-      50% { box-shadow: 0 4px 24px rgba(245,200,0,0.75); }
+
+      0%,
+      100% {
+        box-shadow: 0 4px 14px rgba(245, 200, 0, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 4px 24px rgba(245, 200, 0, 0.75);
+      }
     }
 
     /* iOS Install Banner */
     .ios-banner {
-      display: none; position: fixed; bottom: 20px; left: 16px; right: 16px;
-      background: var(--green-dark); color: white; border-radius: 18px;
-      padding: 16px 18px; z-index: 9999;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 16px;
+      right: 16px;
+      background: var(--green-dark);
+      color: white;
+      border-radius: 18px;
+      padding: 16px 18px;
+      z-index: 9999;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
       animation: fadeUp 0.4s ease;
-      border: 1.5px solid rgba(245,200,0,0.3);
+      border: 1.5px solid rgba(245, 200, 0, 0.3);
     }
-    .ios-banner.show { display: flex; align-items: flex-start; gap: 14px; }
-    .ios-banner-icon { font-size: 32px; flex-shrink: 0; margin-top: 2px; }
-    .ios-banner-text { flex: 1; font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.85); }
-    .ios-banner-text strong { color: var(--yellow); font-size: 14px; display: block; margin-bottom: 2px; }
+
+    .ios-banner.show {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .ios-banner-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .ios-banner-text {
+      flex: 1;
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .ios-banner-text strong {
+      color: var(--yellow);
+      font-size: 14px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
     .ios-banner-close {
-      background: rgba(255,255,255,0.15); border: none; color: white;
-      width: 28px; height: 28px; border-radius: 50%; font-size: 14px;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
     }
   </style>
-  <link rel="manifest" href="manifest.json"/>
-  <meta name="theme-color" content="#1E4A1E"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="Al-Barakah's"/>
-  <link rel="apple-touch-icon" href="logo.jpg.jpeg"/>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1E4A1E" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Al-Barakah's" />
+  <link rel="apple-touch-icon" href="logo.jpg.jpeg" />
 </head>
+
 <body>
 
-<!-- NAVBAR -->
-<nav>
-  <a href="index.html" class="brand">
-    <div class="brand-logo">
-      <img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/>
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="brand">
+      <div class="brand-logo">
+        <img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'" />
+      </div>
+      <div class="brand-name">
+        Al-Barakah's
+        <small>Fresh Cut Fruits</small>
+      </div>
+    </a>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle Dark Mode"></button>
+
+    <!-- Install App Button -->
+    <button class="install-btn" id="installBtn" onclick="installApp()">
+      📲 Install App
+    </button>
+
+    <!-- Hamburger -->
+    <div class="hamburger" onclick="toggleMenu()">
+      ☰
     </div>
-    <div class="brand-name">
-      Al-Barakah's
-      <small>Fresh Cut Fruits</small>
+
+    <!-- Nav links -->
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="order.html">Order</a>
+      <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
+
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <!-- iOS Install Banner -->
+  <div class="ios-banner" id="iosBanner">
+    <div class="ios-banner-icon">🍉</div>
+    <div class="ios-banner-text">
+      <strong>Install Al-Barakah's App!</strong>
+      Tap <strong style="color:white">Share 📤</strong> then <strong style="color:white">"Add to Home Screen"</strong>
+      to install the app on your iPhone.
+    </div>
+    <button class="ios-banner-close" onclick="document.getElementById('iosBanner').classList.remove('show')">✕</button>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-circle hbc1"></div>
+    <div class="hero-bg-circle hbc2"></div>
+    <div class="hero-bg-circle hbc3"></div>
+
+    <span class="fruit fr1">🍓</span>
+    <span class="fruit fr2">🥭</span>
+    <span class="fruit fr3">🍇</span>
+    <span class="fruit fr4">🍍</span>
+    <span class="fruit fr5">🥝</span>
+    <span class="fruit fr6">🍊</span>
+    <span class="fruit fr7">🍉</span>
+    <span class="fruit fr8">🍌</span>
+
+    <div class="hero-logo">
+      <img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'" />
+    </div>
+
+    <div class="hero-tag">🌿 Freshly Prepared Daily</div>
+
+    <h1 class="hero-title">Al-Barakah's</h1>
+    <h2 class="hero-title-sub">Fresh Cut Fruits</h2>
+
+    <div class="hero-offer">🔥 10–25% OFF ON EVERYTHING!</div>
+
+    <div class="hero-actions">
+      <a href="order.html" class="btn-main">🍓 Order Now</a>
+      <a href="#menu" class="btn-outline" style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.3);">📋
+        View Menu</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-n">FREE</div>
+        <div class="stat-l">Delivery upto 3km</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">3</div>
+        <div class="stat-l">Daily Slots</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">₹9</div>
+        <div class="stat-l">Per km after 3km</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">100%</div>
+        <div class="stat-l">Fresh & Natural</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERY BANNER -->
+  <div class="delivery-banner">
+    <div class="db-item"><span class="db-icon">🚴</span> FREE delivery up to 3 km</div>
+    <div class="db-item"><span class="db-icon">⏰</span> Slot 1: 7:00–8:00 AM</div>
+    <div class="db-item"><span class="db-icon">⏰</span> Slot 2: 9:30–10:30 AM</div>
+    <div class="db-item"><span class="db-icon">⏰</span> Slot 3: 4:00–5:30 PM</div>
+    <div class="db-item"><span class="db-icon">📱</span> Pre-book 1½ hr in advance</div>
+  </div>
+
+  <!-- MENU SECTION -->
+  <section class="menu-section reveal" id="menu">
+    <div class="section-header">
+      <div class="section-tag">Our Menu</div>
+      <h2 class="section-title">Our <span>Fresh</span> Menu</h2>
+      <p class="section-sub">Handcrafted fruit bowls — solo or combo, always fresh, always delicious.</p>
+    </div>
+
+    <div class="menu-scroll-wrapper">
+      <div class="menu-scroll-track" id="menuTrack">
+        <div class="menu-slide">
+          <span class="slide-label">🍉 Solo Fruit Bowls</span>
+          <img src="solo menu.jpg.png" alt="Solo Fruit Bowls Menu" />
+        </div>
+        <div class="menu-slide">
+          <span class="slide-label">🥗 Special Combo Bowls</span>
+          <img src="mix menu.jpg.png" alt="Special Combo Bowls Menu" />
+        </div>
+        <div class="menu-slide">
+          <span class="slide-label">📋 Delivery Criteria</span>
+          <img src="delivery criteria.jpg.png" alt="Delivery Criteria" />
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-nav">
+      <button class="scroll-btn" id="prevBtn">‹</button>
+      <div class="scroll-dots" id="dots">
+        <div class="dot active" onclick="goToSlide(0)"></div>
+        <div class="dot" onclick="goToSlide(1)"></div>
+        <div class="dot" onclick="goToSlide(2)"></div>
+      </div>
+      <button class="scroll-btn" id="nextBtn">›</button>
+    </div>
+
+    <div class="menu-cta">
+      <p>Ready to order your fresh fruit bowl? 🍓</p>
+      <a href="order.html" class="btn-main">Order Now →</a>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="section why-section reveal">
+    <div style="text-align:center;margin-bottom:8px">
+      <div class="section-tag">Why Choose Us</div>
+    </div>
+    <h2 class="section-title" style="text-align:center">The <span>Al-Barakah's</span> Promise</h2>
+    <div class="why-grid">
+      <div class="why-card reveal d1">
+        <span class="why-icon">🌱</span>
+        <div class="why-title">100% Fresh & Natural</div>
+        <div class="why-desc">Sourced daily from local farms. Zero preservatives, zero artificial flavours.</div>
+      </div>
+      <div class="why-card reveal d2">
+        <span class="why-icon">🤲</span>
+        <div class="why-title">Handcrafted with Love</div>
+        <div class="why-desc">Every bowl assembled by hand for perfect balance of colour, taste and nutrition.</div>
+      </div>
+      <div class="why-card reveal d3">
+        <span class="why-icon">🚴</span>
+        <div class="why-title">Fast Free Delivery</div>
+        <div class="why-desc">Absolute FREE delivery up to 3 km. Only ₹9 per km after that.</div>
+      </div>
+      <div class="why-card reveal d4">
+        <span class="why-icon">📅</span>
+        <div class="why-title">Subscription Plans</div>
+        <div class="why-desc">Weekly from ₹499 & Monthly from ₹2100. Never miss your daily dose of freshness.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+
+  <!-- GOOGLE REVIEW FLOATING BUTTON -->
+  <a class="review-fab" href="https://g.page/r/CUQO1oCaW4juEBI/review" target="_blank" rel="noopener"
+    title="Rate us on Google">
+    <div class="rfab-logo">⭐</div>
+    <div class="rfab-text">
+      Rate Us
+      <span class="rfab-stars">★★★★★</span>
+      <span class="rfab-label">on Google</span>
     </div>
   </a>
 
-  <!-- Dark Mode Toggle -->
-  <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle Dark Mode"></button>
-
-  <!-- Install App Button -->
-  <button class="install-btn" id="installBtn" onclick="installApp()">
-    📲 Install App
-  </button>
-
-  <!-- Hamburger -->
-  <div class="hamburger" onclick="toggleMenu()">
-    ☰
-  </div>
-
-  <!-- Nav links -->
-  <div class="nav-links" id="navLinks">
-    <a href="index.html">Home</a>
-    <a href="order.html">Order</a>
-    <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
-    
-    <a href="contact.html">Contact</a>
-  </div>
-</nav>
-
-<!-- iOS Install Banner -->
-<div class="ios-banner" id="iosBanner">
-  <div class="ios-banner-icon">🍉</div>
-  <div class="ios-banner-text">
-    <strong>Install Al-Barakah's App!</strong>
-    Tap <strong style="color:white">Share 📤</strong> then <strong style="color:white">"Add to Home Screen"</strong> to install the app on your iPhone.
-  </div>
-  <button class="ios-banner-close" onclick="document.getElementById('iosBanner').classList.remove('show')">✕</button>
-</div>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-circle hbc1"></div>
-  <div class="hero-bg-circle hbc2"></div>
-  <div class="hero-bg-circle hbc3"></div>
-
-  <span class="fruit fr1">🍓</span>
-  <span class="fruit fr2">🥭</span>
-  <span class="fruit fr3">🍇</span>
-  <span class="fruit fr4">🍍</span>
-  <span class="fruit fr5">🥝</span>
-  <span class="fruit fr6">🍊</span>
-  <span class="fruit fr7">🍉</span>
-  <span class="fruit fr8">🍌</span>
-
-  <div class="hero-logo">
-    <img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/>
-  </div>
-
-  <div class="hero-tag">🌿 Freshly Prepared Daily</div>
-
-  <h1 class="hero-title">Al-Barakah's</h1>
-  <h2 class="hero-title-sub">Fresh Cut Fruits</h2>
-
-  <div class="hero-offer">🔥 10–25% OFF ON EVERYTHING!</div>
-
-  <div class="hero-actions">
-    <a href="order.html" class="btn-main">🍓 Order Now</a>
-    <a href="#menu" class="btn-outline" style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.3);">📋 View Menu</a>
-  </div>
-
-  <div class="hero-stats">
-    <div class="stat"><div class="stat-n">FREE</div><div class="stat-l">Delivery upto 3km</div></div>
-    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Daily Slots</div></div>
-    <div class="stat"><div class="stat-n">₹9</div><div class="stat-l">Per km after 3km</div></div>
-    <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Fresh & Natural</div></div>
-  </div>
-</section>
-
-<!-- DELIVERY BANNER -->
-<div class="delivery-banner">
-  <div class="db-item"><span class="db-icon">🚴</span> FREE delivery up to 3 km</div>
-  <div class="db-item"><span class="db-icon">⏰</span> Slot 1: 7:00–8:00 AM</div>
-  <div class="db-item"><span class="db-icon">⏰</span> Slot 2: 9:30–10:30 AM</div>
-  <div class="db-item"><span class="db-icon">⏰</span> Slot 3: 4:00–5:30 PM</div>
-  <div class="db-item"><span class="db-icon">📱</span> Pre-book 1½ hr in advance</div>
-</div>
-
-<!-- MENU SECTION -->
-<section class="menu-section reveal" id="menu">
-  <div class="section-header">
-    <div class="section-tag">Our Menu</div>
-    <h2 class="section-title">Our <span>Fresh</span> Menu</h2>
-    <p class="section-sub">Handcrafted fruit bowls — solo or combo, always fresh, always delicious.</p>
-  </div>
-
-  <div class="menu-scroll-wrapper">
-    <div class="menu-scroll-track" id="menuTrack">
-      <div class="menu-slide">
-        <span class="slide-label">🍉 Solo Fruit Bowls</span>
-        <img src="solo menu.jpg.png" alt="Solo Fruit Bowls Menu"/>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo">Al-Barakah's</div>
+        <p>Fresh Cut Fruits delivered to your door. Handcrafted bowls made daily with love from the finest seasonal
+          fruits.</p>
       </div>
-      <div class="menu-slide">
-        <span class="slide-label">🥗 Special Combo Bowls</span>
-        <img src="mix menu.jpg.png" alt="Special Combo Bowls Menu"/>
+      <div class="footer-col">
+        <h4>📍 Our Location</h4>
+        <div class="address-lines">
+          <strong>Al-Barakah's Fresh Cut Fruits</strong><br />
+          18-05-43, 3rd Line,<br />
+          Kederaswarapeta,<br />
+          Near Mango Market,<br />
+          Vijayawada — 520003<br /><br />
+          <strong>📞 8466949434 / 7337466536</strong>
+        </div>
       </div>
-      <div class="menu-slide">
-        <span class="slide-label">📋 Delivery Criteria</span>
-        <img src="delivery criteria.jpg.png" alt="Delivery Criteria"/>
+      <div class="footer-col">
+        <h4>💬 Follow Us</h4>
+        <div class="social-list">
+          <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRm" class="social-item"
+            target="_blank">
+            <div class="sicon ig">📸</div>
+            <div>
+              <div style="color:white;font-size:14px;font-weight:500">Instagram</div>
+              <div>@albarakahsfreshfruits</div>
+            </div>
+          </a>
+
+          <a href="https://g.page/r/CUQO1oCaW4juEBI/review" target="_blank" rel="noopener" class="social-item"
+            style="background:linear-gradient(135deg,#4285F4,#34A853)">
+            <div class="sicon" style="background:white;color:#4285F4;font-size:18px;">G</div>
+            <div>
+              <div style="color:white;font-size:14px;font-weight:500">Google Reviews</div>
+              <div>Rate us ★★★★★</div>
+            </div>
+          </a>
+          <a href="https://wa.me/918466949434" class="social-item" target="_blank">
+            <div class="sicon wa">💬</div>
+            <div>
+              <div style="color:white;font-size:14px;font-weight:500">WhatsApp</div>
+              <div>+91 84669 49434</div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="scroll-nav">
-    <button class="scroll-btn" id="prevBtn">‹</button>
-    <div class="scroll-dots" id="dots">
-      <div class="dot active" onclick="goToSlide(0)"></div>
-      <div class="dot" onclick="goToSlide(1)"></div>
-      <div class="dot" onclick="goToSlide(2)"></div>
+    <div class="footer-bottom">
+      <p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p>
+      <p>Designed &amp; Developed by Banda Karthik</p>
     </div>
-    <button class="scroll-btn" id="nextBtn">›</button>
-  </div>
+  </footer>
 
-  <div class="menu-cta">
-    <p>Ready to order your fresh fruit bowl? 🍓</p>
-    <a href="order.html" class="btn-main">Order Now →</a>
-  </div>
-</section>
+  <script>
+    // Cart count from localStorage
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('albarakahCart') || '[]');
+      const total = cart.reduce((s, i) => s + i.qty, 0);
+      document.getElementById('cartCount').textContent = total;
+    }
+    updateCartCount();
 
-<!-- WHY US -->
-<section class="section why-section reveal">
-  <div style="text-align:center;margin-bottom:8px"><div class="section-tag">Why Choose Us</div></div>
-  <h2 class="section-title" style="text-align:center">The <span>Al-Barakah's</span> Promise</h2>
-  <div class="why-grid">
-    <div class="why-card reveal d1">
-      <span class="why-icon">🌱</span>
-      <div class="why-title">100% Fresh & Natural</div>
-      <div class="why-desc">Sourced daily from local farms. Zero preservatives, zero artificial flavours.</div>
-    </div>
-    <div class="why-card reveal d2">
-      <span class="why-icon">🤲</span>
-      <div class="why-title">Handcrafted with Love</div>
-      <div class="why-desc">Every bowl assembled by hand for perfect balance of colour, taste and nutrition.</div>
-    </div>
-    <div class="why-card reveal d3">
-      <span class="why-icon">🚴</span>
-      <div class="why-title">Fast Free Delivery</div>
-      <div class="why-desc">Absolute FREE delivery up to 3 km. Only ₹9 per km after that.</div>
-    </div>
-    <div class="why-card reveal d4">
-      <span class="why-icon">📅</span>
-      <div class="why-title">Subscription Plans</div>
-      <div class="why-desc">Weekly from ₹499 & Monthly from ₹2100. Never miss your daily dose of freshness.</div>
-    </div>
-  </div>
-</section>
+    // Menu slider
+    let current = 0;
+    const track = document.getElementById('menuTrack');
+    const dots = document.querySelectorAll('.dot');
+    const slides = document.querySelectorAll('.menu-slide');
 
-<!-- FOOTER -->
+    function goToSlide(n) {
+      current = n;
+      track.scrollTo({ left: track.offsetWidth * n, behavior: 'smooth' });
+      dots.forEach((d, i) => d.classList.toggle('active', i === n));
+    }
 
-<!-- GOOGLE REVIEW FLOATING BUTTON -->
-<a class="review-fab" href="https://g.page/r/CUQO1oCaW4juEBI/review" target="_blank" rel="noopener" title="Rate us on Google">
-  <div class="rfab-logo">⭐</div>
-  <div class="rfab-text">
-    Rate Us
-    <span class="rfab-stars">★★★★★</span>
-    <span class="rfab-label">on Google</span>
-  </div>
-</a>
+    document.getElementById('nextBtn').addEventListener('click', () => goToSlide((current + 1) % slides.length));
+    document.getElementById('prevBtn').addEventListener('click', () => goToSlide((current - 1 + slides.length) % slides.length));
 
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="f-logo">Al-Barakah's</div>
-      <p>Fresh Cut Fruits delivered to your door. Handcrafted bowls made daily with love from the finest seasonal fruits.</p>
-    </div>
-    <div class="footer-col">
-      <h4>📍 Our Location</h4>
-      <div class="address-lines">
-        <strong>Al-Barakah's Fresh Cut Fruits</strong><br/>
-        18-05-43, 3rd Line,<br/>
-        Kederaswarapeta,<br/>
-        Near Mango Market,<br/>
-        Vijayawada — 520003<br/><br/>
-        <strong>📞 8466949434 / 7337466536</strong>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>💬 Follow Us</h4>
-      <div class="social-list">
-        <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRm" class="social-item" target="_blank">
-          <div class="sicon ig">📸</div>
-          <div><div style="color:white;font-size:14px;font-weight:500">Instagram</div><div>@albarakahsfreshfruits</div></div>
-        </a>
-        
-              <a href="https://g.page/r/CUQO1oCaW4juEBI/review" target="_blank" rel="noopener" class="social-item" style="background:linear-gradient(135deg,#4285F4,#34A853)">
-        <div class="sicon" style="background:white;color:#4285F4;font-size:18px;">G</div>
-        <div><div style="color:white;font-size:14px;font-weight:500">Google Reviews</div><div>Rate us ★★★★★</div></div>
-      </a>
-      <a href="https://wa.me/918466949434" class="social-item" target="_blank">
-          <div class="sicon wa">💬</div>
-          <div><div style="color:white;font-size:14px;font-weight:500">WhatsApp</div><div>+91 84669 49434</div></div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p>
-    <p>Designed &amp; Developed by Banda Karthik</p>
-  </div>
-</footer>
+    // Auto-advance
+    setInterval(() => goToSlide((current + 1) % slides.length), 5000);
 
-<script>
-  // Cart count from localStorage
-  function updateCartCount(){
-    const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
-    const total = cart.reduce((s,i)=>s+i.qty,0);
-    document.getElementById('cartCount').textContent = total;
-  }
-  updateCartCount();
+    // Scroll reveal
+    const revEls = document.querySelectorAll('.reveal');
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    revEls.forEach(r => revObs.observe(r));
+  </script>
+  <script>
 
-  // Menu slider
-  let current = 0;
-  const track = document.getElementById('menuTrack');
-  const dots = document.querySelectorAll('.dot');
-  const slides = document.querySelectorAll('.menu-slide');
+    // ── DARK MODE ──
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark') ? '1' : '0');
+    }
+    if (localStorage.getItem('darkMode') === '1') document.body.classList.add('dark');
 
-  function goToSlide(n){
-    current = n;
-    track.scrollTo({ left: track.offsetWidth * n, behavior: 'smooth' });
-    dots.forEach((d,i)=>d.classList.toggle('active', i===n));
-  }
-
-  document.getElementById('nextBtn').addEventListener('click',()=>goToSlide((current+1)%slides.length));
-  document.getElementById('prevBtn').addEventListener('click',()=>goToSlide((current-1+slides.length)%slides.length));
-
-  // Auto-advance
-  setInterval(()=>goToSlide((current+1)%slides.length), 5000);
-
-  // Scroll reveal
-  const revEls = document.querySelectorAll('.reveal');
-  const revObs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-  },{threshold:0.08});
-  revEls.forEach(r=>revObs.observe(r));
-</script>
-<script>
-
-  // ── DARK MODE ──
-  function toggleDark(){
-    document.body.classList.toggle('dark');
-    localStorage.setItem('darkMode', document.body.classList.contains('dark') ? '1' : '0');
-  }
-  if(localStorage.getItem('darkMode') === '1') document.body.classList.add('dark');
-
-  function toggleMenu(){
-    document.getElementById("navLinks").classList.toggle("show");
-  }
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("show");
+    }
 
 
-// ── PWA Install Logic ──
-let deferredPrompt = null;
+    // ── PWA Install Logic ──
+    let deferredPrompt = null;
 
-// Android / Desktop — browser fires this event
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById('installBtn').classList.add('show');
-});
+    // Android / Desktop — browser fires this event
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installBtn').classList.add('show');
+    });
 
-function installApp() {
-  if (deferredPrompt) {
-    // Android / Desktop — show native install prompt
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((result) => {
-      if (result.outcome === 'accepted') {
-        document.getElementById('installBtn').classList.remove('show');
+    function installApp() {
+      if (deferredPrompt) {
+        // Android / Desktop — show native install prompt
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((result) => {
+          if (result.outcome === 'accepted') {
+            document.getElementById('installBtn').classList.remove('show');
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        // iOS — show manual instructions banner
+        document.getElementById('iosBanner').classList.add('show');
       }
+    }
+
+    // Show install btn on iOS too (since beforeinstallprompt doesn't fire on iOS)
+    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isInStandaloneMode = window.navigator.standalone;
+    if (isIos && !isInStandaloneMode) {
+      document.getElementById('installBtn').classList.add('show');
+    }
+
+    // Hide install button after app is installed
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('installBtn').classList.remove('show');
       deferredPrompt = null;
     });
-  } else {
-    // iOS — show manual instructions banner
-    document.getElementById('iosBanner').classList.add('show');
-  }
-}
 
-// Show install btn on iOS too (since beforeinstallprompt doesn't fire on iOS)
-const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
-const isInStandaloneMode = window.navigator.standalone;
-if (isIos && !isInStandaloneMode) {
-  document.getElementById('installBtn').classList.add('show');
-}
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => { });
+    }
 
-// Hide install button after app is installed
-window.addEventListener('appinstalled', () => {
-  document.getElementById('installBtn').classList.remove('show');
-  deferredPrompt = null;
-});
-
-// Register Service Worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
-}
-
-</script>
+  </script>
 </body>
+
 </html>

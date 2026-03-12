@@ -1,339 +1,644 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — Al-Barakah's Fresh Cut Fruits</title>
-  <link rel="stylesheet" href="shared.css"/>
-  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
-  <link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png"/>
+  <link rel="stylesheet" href="shared.css" />
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+  <link rel="apple-touch-icon" href="/favicon-192.png">
+
+  <!-- Logo for Google -->
+  <meta property="og:image" content="/favicon-192.png">
   <style>
-    body { padding-top: 72px; }
+    body {
+      padding-top: 72px;
+    }
 
     .page-hero {
       background: linear-gradient(135deg, var(--green-dark), #1a4a1a);
-      padding: 52px 48px 40px; text-align: center; position: relative; overflow: hidden;
+      padding: 52px 48px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 50%, rgba(245,200,0,0.12) 0%, transparent 70%); }
-    .page-hero h1 { font-family:'Abril Fatface',serif; font-size:clamp(32px,5vw,52px); color:var(--yellow); position:relative; z-index:1; margin-bottom:8px; }
-    .page-hero p { color:rgba(255,255,255,0.6); font-size:15px; position:relative; z-index:1; }
 
-    .contact-section { padding: 72px 48px; }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(245, 200, 0, 0.12) 0%, transparent 70%);
+    }
+
+    .page-hero h1 {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      color: var(--yellow);
+      position: relative;
+      z-index: 1;
+      margin-bottom: 8px;
+    }
+
+    .page-hero p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-section {
+      padding: 72px 48px;
+    }
 
     .contact-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 32px; max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     .contact-card {
-      background: white; border-radius: 24px; padding: 36px;
+      background: white;
+      border-radius: 24px;
+      padding: 36px;
       border: 2px solid var(--border);
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
-    .contact-card:hover { border-color: var(--yellow); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(245,200,0,0.12); }
 
-    .cc-icon { font-size: 48px; margin-bottom: 16px; display:block; }
-    .cc-title { font-family:'Abril Fatface',serif; font-size:22px; color:var(--green-dark); margin-bottom:6px; }
-    .cc-sub { font-size:13px; color:var(--ink-muted); margin-bottom:20px; line-height:1.6; }
+    .contact-card:hover {
+      border-color: var(--yellow);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(245, 200, 0, 0.12);
+    }
+
+    .cc-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .cc-title {
+      font-family: 'Abril Fatface', serif;
+      font-size: 22px;
+      color: var(--green-dark);
+      margin-bottom: 6px;
+    }
+
+    .cc-sub {
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
 
     .cc-link {
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 18px; border-radius: 14px; background: var(--cream);
-      text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 500;
-      transition: background 0.2s; margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: var(--cream);
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+      margin-bottom: 10px;
     }
-    .cc-link:hover { background: var(--green-light); color: var(--green-dark); }
-    .cc-link-icon { font-size: 22px; }
-    .cc-link-text small { display:block; font-size:11px; color:var(--ink-muted); font-weight:400; }
+
+    .cc-link:hover {
+      background: var(--green-light);
+      color: var(--green-dark);
+    }
+
+    .cc-link-icon {
+      font-size: 22px;
+    }
+
+    .cc-link-text small {
+      display: block;
+      font-size: 11px;
+      color: var(--ink-muted);
+      font-weight: 400;
+    }
 
     /* Slots */
-    .slots-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:8px; }
-    .slot-chip {
-      background: var(--green-light); border-radius:14px; padding:14px 12px; text-align:center;
-      border:1.5px solid rgba(45,106,45,0.2);
+    .slots-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px;
     }
-    .slot-chip .sc-icon { font-size:22px; margin-bottom:4px; display:block; }
-    .slot-chip .sc-num { font-size:11px; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:0.5px; }
-    .slot-chip .sc-time { font-size:12px; font-weight:600; color:var(--green-dark); margin-top:2px; }
+
+    .slot-chip {
+      background: var(--green-light);
+      border-radius: 14px;
+      padding: 14px 12px;
+      text-align: center;
+      border: 1.5px solid rgba(45, 106, 45, 0.2);
+    }
+
+    .slot-chip .sc-icon {
+      font-size: 22px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .slot-chip .sc-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .slot-chip .sc-time {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green-dark);
+      margin-top: 2px;
+    }
 
     /* Full width card */
-    .contact-card.full { grid-column: 1 / -1; }
+    .contact-card.full {
+      grid-column: 1 / -1;
+    }
 
     .address-big {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top:16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
     }
-    .ab-block { background:var(--cream); border-radius:16px; padding:20px 22px; }
-    .ab-block h4 { font-size:12px; font-weight:700; color:var(--green); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
-    .ab-block p { font-size:14px; line-height:2; color:var(--ink-soft); }
-    .ab-block p strong { color:var(--ink); font-weight:600; }
+
+    .ab-block {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 20px 22px;
+    }
+
+    .ab-block h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .ab-block p {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--ink-soft);
+    }
+
+    .ab-block p strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
 
     /* social big */
-    .social-big { display:grid; grid-template-columns: repeat(3,1fr); gap:14px; margin-top:8px; }
-    .sb-card {
-      border-radius:18px; padding:24px 20px; text-align:center;
-      text-decoration:none; transition:transform 0.2s, box-shadow 0.2s; color:white;
+    .social-big {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 8px;
     }
-    .sb-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.2); }
-    .sb-card .sb-icon { font-size:36px; margin-bottom:10px; display:block; }
-    .sb-card .sb-name { font-size:15px; font-weight:700; }
-    .sb-card .sb-handle { font-size:12px; opacity:0.8; margin-top:3px; }
-    .sb-ig { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
-    .sb-fb { background: linear-gradient(135deg,#1877F2,#0d5abf); }
-    .sb-wa { background: linear-gradient(135deg,#25D366,#1a9e4a); }
 
-    @media(max-width:1024px){
-      .contact-section { padding: 56px 28px; }
-      .contact-grid { gap: 20px; }
+    .sb-card {
+      border-radius: 18px;
+      padding: 24px 20px;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      color: white;
     }
-    @media(max-width:768px){
-      .contact-section { padding: 36px 16px; }
-      .contact-grid { grid-template-columns:1fr; gap:16px; }
-      .contact-card.full { grid-column:1; }
-      .address-big { grid-template-columns:1fr; gap:14px; }
-      .social-big { grid-template-columns:1fr; gap:12px; }
-      .slots-grid { grid-template-columns: repeat(3,1fr); gap:10px; }
-      .page-hero { padding:36px 20px 28px; }
-      .contact-card { padding: 24px 20px; }
+
+    .sb-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
     }
-    @media(max-width:480px){
-      .slots-grid { grid-template-columns: 1fr; }
-      .social-big { grid-template-columns: 1fr; }
+
+    .sb-card .sb-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .sb-card .sb-name {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .sb-card .sb-handle {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-top: 3px;
+    }
+
+    .sb-ig {
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    }
+
+    .sb-fb {
+      background: linear-gradient(135deg, #1877F2, #0d5abf);
+    }
+
+    .sb-wa {
+      background: linear-gradient(135deg, #25D366, #1a9e4a);
+    }
+
+    @media(max-width:1024px) {
+      .contact-section {
+        padding: 56px 28px;
+      }
+
+      .contact-grid {
+        gap: 20px;
+      }
+    }
+
+    @media(max-width:768px) {
+      .contact-section {
+        padding: 36px 16px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .contact-card.full {
+        grid-column: 1;
+      }
+
+      .address-big {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .social-big {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .slots-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .page-hero {
+        padding: 36px 20px 28px;
+      }
+
+      .contact-card {
+        padding: 24px 20px;
+      }
+    }
+
+    @media(max-width:480px) {
+      .slots-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .social-big {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* ── GOOGLE REVIEW FLOATING BUTTON ── */
     .review-fab {
-      position: fixed; bottom: 90px; right: 18px; z-index: 1400;
-      display: flex; align-items: center; gap: 10px;
-      background: white; border-radius: 50px;
+      position: fixed;
+      bottom: 90px;
+      right: 18px;
+      z-index: 1400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      border-radius: 50px;
       padding: 10px 16px 10px 10px;
-      box-shadow: 0 6px 28px rgba(0,0,0,0.18);
-      text-decoration: none; color: #111;
+      box-shadow: 0 6px 28px rgba(0, 0, 0, 0.18);
+      text-decoration: none;
+      color: #111;
       font-family: 'Poppins', sans-serif;
-      font-size: 13px; font-weight: 700;
+      font-size: 13px;
+      font-weight: 700;
       border: 2px solid #f0f0f0;
       transition: transform 0.2s, box-shadow 0.2s;
       animation: fabPop 0.5s ease 1s both;
     }
-    .review-fab:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 36px rgba(0,0,0,0.22); }
-    .review-fab .rfab-logo {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: white; display: flex; align-items: center; justify-content: center;
-      font-size: 20px; flex-shrink: 0;
+
+    .review-fab:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
     }
-    .review-fab .rfab-stars { color: #FBBC04; font-size: 12px; display: block; margin-top: 1px; }
-    .review-fab .rfab-text { line-height: 1.2; }
-    .review-fab .rfab-label { font-size: 12px; color: #555; font-weight: 400; display: block; }
-    @keyframes fabPop { from { opacity:0; transform: scale(0.7) translateY(20px); } to { opacity:1; transform: scale(1) translateY(0); } }
-    @media(max-width:480px){
-      .review-fab { bottom: 86px; right: 12px; padding: 8px 12px 8px 8px; font-size:12px; }
-      .review-fab .rfab-logo { width:28px; height:28px; font-size:17px; }
+
+    .review-fab .rfab-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .review-fab .rfab-stars {
+      color: #FBBC04;
+      font-size: 12px;
+      display: block;
+      margin-top: 1px;
+    }
+
+    .review-fab .rfab-text {
+      line-height: 1.2;
+    }
+
+    .review-fab .rfab-label {
+      font-size: 12px;
+      color: #555;
+      font-weight: 400;
+      display: block;
+    }
+
+    @keyframes fabPop {
+      from {
+        opacity: 0;
+        transform: scale(0.7) translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @media(max-width:480px) {
+      .review-fab {
+        bottom: 86px;
+        right: 12px;
+        padding: 8px 12px 8px 8px;
+        font-size: 12px;
+      }
+
+      .review-fab .rfab-logo {
+        width: 28px;
+        height: 28px;
+        font-size: 17px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="index.html" class="brand">
-    <div class="brand-logo">
-      <img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'"/>
+  <nav>
+    <a href="index.html" class="brand">
+      <div class="brand-logo">
+        <img src="logo.jpg.jpeg" alt="logo" onerror="this.style.display='none';this.parentElement.innerHTML='🍉'" />
+      </div>
+      <div class="brand-name">
+        Al-Barakah's
+        <small>Fresh Cut Fruits</small>
+      </div>
+    </a>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle Dark Mode"></button>
+
+    <!-- Hamburger -->
+    <div class="hamburger" onclick="toggleMenu()">
+      ☰
     </div>
-    <div class="brand-name">
-      Al-Barakah's
-      <small>Fresh Cut Fruits</small>
+
+    <!-- Nav links -->
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="order.html">Order</a>
+      <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
+
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <h1>📞 Contact Us</h1>
+    <p>We'd love to hear from you — reach us any time!</p>
+  </div>
+
+  <section class="contact-section">
+    <div class="contact-grid">
+
+      <!-- Phone -->
+      <div class="contact-card reveal">
+        <span class="cc-icon">📞</span>
+        <div class="cc-title">Call / WhatsApp Us</div>
+        <div class="cc-sub">Reach us directly on phone or WhatsApp for orders and inquiries.</div>
+        <a href="tel:+918466949434" class="cc-link">
+          <span class="cc-link-icon">📱</span>
+          <div class="cc-link-text">+91 84669 49434 <small>Primary Number</small></div>
+        </a>
+        <a href="tel:+917337466536" class="cc-link">
+          <span class="cc-link-icon">📱</span>
+          <div class="cc-link-text">+91 73374 66536 <small>Alternate Number</small></div>
+        </a>
+        <a href="https://wa.me/918466949434" target="_blank" class="cc-link" style="background:#e8fff0">
+          <span class="cc-link-icon">💬</span>
+          <div class="cc-link-text" style="color:#1a7a3a">Chat on WhatsApp <small>Fastest response</small></div>
+        </a>
+      </div>
+
+      <!-- Delivery Slots -->
+      <div class="contact-card reveal d1">
+        <span class="cc-icon">⏰</span>
+        <div class="cc-title">Delivery Slots</div>
+        <div class="cc-sub">We deliver in 3 daily slots. Pre-book at least 1½ hours before your preferred slot.</div>
+        <div class="slots-grid">
+          <div class="slot-chip">
+            <span class="sc-icon">🌅</span>
+            <div class="sc-num">Slot 1</div>
+            <div class="sc-time">7:00 AM<br />8:00 AM</div>
+          </div>
+          <div class="slot-chip">
+            <span class="sc-icon">☀️</span>
+            <div class="sc-num">Slot 2</div>
+            <div class="sc-time">9:30 AM<br />10:30 AM</div>
+          </div>
+          <div class="slot-chip">
+            <span class="sc-icon">🌇</span>
+            <div class="sc-num">Slot 3</div>
+            <div class="sc-time">4:00 PM<br />5:30 PM</div>
+          </div>
+        </div>
+        <div
+          style="background:var(--yellow-light);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:13px;color:var(--green-dark);line-height:1.7">
+          ⚠️ Orders must be confirmed <strong>1½ hours before</strong> the slot. Only pre-confirmed orders are accepted.
+        </div>
+      </div>
+
+      <!-- Address + Hours full width -->
+      <div class="contact-card full reveal">
+        <span class="cc-icon">📍</span>
+        <div class="cc-title">Find Us & Business Hours</div>
+        <div class="address-big">
+          <div class="ab-block">
+            <h4>📍 Our Kitchen</h4>
+            <p>
+              <strong>Al-Barakah's Fresh Cut Fruits</strong><br />
+              18-05-43, 3rd Line,<br />
+              Kederaswarapeta,<br />
+              Near Mango Market,<br />
+              <strong>Vijayawada — 520003</strong><br />
+              Andhra Pradesh, India
+            </p>
+          </div>
+          <div class="ab-block">
+            <h4>🕐 Business Hours</h4>
+            <p>
+              <strong>Monday – Saturday</strong><br />
+              8:30 AM – 9:00 PM<br /><br />
+              <strong>Sunday</strong><br />
+              8:30 AM – 5:00 PM<br /><br />
+              <strong>Delivery:</strong> FREE up to 3 km<br />
+              ₹9 per km beyond 3 km
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Socials full width -->
+      <div class="contact-card full reveal">
+        <span class="cc-icon">🌐</span>
+        <div class="cc-title">Follow Us on Social Media</div>
+        <div class="cc-sub">Stay updated with our daily specials, offers and fresh arrivals!</div>
+        <div class="social-big">
+          <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRmS" target="_blank"
+            class="sb-card sb-ig">
+            <span class="sb-icon">📸</span>
+            <div class="sb-name">Instagram</div>
+            <div class="sb-handle">@albarakahsfreshfruits</div>
+          </a>
+
+          <a href="https://wa.me/918466949434" target="_blank" class="sb-card sb-wa">
+            <span class="sb-icon">💬</span>
+            <div class="sb-name">WhatsApp</div>
+            <div class="sb-handle">+91 84669 49434</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Order CTA -->
+      <div class="contact-card full reveal"
+        style="background:linear-gradient(135deg,var(--green-dark),#1a4a1a);border-color:transparent;text-align:center">
+        <span class="cc-icon">🍓</span>
+        <div class="cc-title" style="color:var(--yellow)">Ready to Order?</div>
+        <div class="cc-sub" style="color:rgba(255,255,255,0.6);max-width:400px;margin:0 auto 28px">Fresh fruit bowls
+          made to order, delivered to your door. Place your order now!</div>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+          <a href="order.html" class="btn-main">🍓 Order Now</a>
+          <a href="https://wa.me/918466949434" target="_blank" class="btn-outline"
+            style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.3)">💬 WhatsApp Order</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- GOOGLE REVIEW FLOATING BUTTON -->
+  <a class="review-fab" href="https://g.page/r/CUQO1oCaW4juEBI/review" target="_blank" rel="noopener"
+    title="Rate us on Google">
+    <div class="rfab-logo">⭐</div>
+    <div class="rfab-text">
+      Rate Us
+      <span class="rfab-stars">★★★★★</span>
+      <span class="rfab-label">on Google</span>
     </div>
   </a>
 
-  <!-- Dark Mode Toggle -->
-  <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle Dark Mode"></button>
-
-  <!-- Hamburger -->
-  <div class="hamburger" onclick="toggleMenu()">
-    ☰
-  </div>
-
-  <!-- Nav links -->
-  <div class="nav-links" id="navLinks">
-    <a href="index.html">Home</a>
-    <a href="order.html">Order</a>
-    <a href="cart.html" class="cart-nav-btn">🛒 Cart <span class="cart-badge" id="cartCount">0</span></a>
-    
-    <a href="contact.html">Contact</a>
-  </div>
-</nav>
-
-<div class="page-hero">
-  <h1>📞 Contact Us</h1>
-  <p>We'd love to hear from you — reach us any time!</p>
-</div>
-
-<section class="contact-section">
-  <div class="contact-grid">
-
-    <!-- Phone -->
-    <div class="contact-card reveal">
-      <span class="cc-icon">📞</span>
-      <div class="cc-title">Call / WhatsApp Us</div>
-      <div class="cc-sub">Reach us directly on phone or WhatsApp for orders and inquiries.</div>
-      <a href="tel:+918466949434" class="cc-link">
-        <span class="cc-link-icon">📱</span>
-        <div class="cc-link-text">+91 84669 49434 <small>Primary Number</small></div>
-      </a>
-      <a href="tel:+917337466536" class="cc-link">
-        <span class="cc-link-icon">📱</span>
-        <div class="cc-link-text">+91 73374 66536 <small>Alternate Number</small></div>
-      </a>
-      <a href="https://wa.me/918466949434" target="_blank" class="cc-link" style="background:#e8fff0">
-        <span class="cc-link-icon">💬</span>
-        <div class="cc-link-text" style="color:#1a7a3a">Chat on WhatsApp <small>Fastest response</small></div>
-      </a>
-    </div>
-
-    <!-- Delivery Slots -->
-    <div class="contact-card reveal d1">
-      <span class="cc-icon">⏰</span>
-      <div class="cc-title">Delivery Slots</div>
-      <div class="cc-sub">We deliver in 3 daily slots. Pre-book at least 1½ hours before your preferred slot.</div>
-      <div class="slots-grid">
-        <div class="slot-chip">
-          <span class="sc-icon">🌅</span>
-          <div class="sc-num">Slot 1</div>
-          <div class="sc-time">7:00 AM<br/>8:00 AM</div>
-        </div>
-        <div class="slot-chip">
-          <span class="sc-icon">☀️</span>
-          <div class="sc-num">Slot 2</div>
-          <div class="sc-time">9:30 AM<br/>10:30 AM</div>
-        </div>
-        <div class="slot-chip">
-          <span class="sc-icon">🌇</span>
-          <div class="sc-num">Slot 3</div>
-          <div class="sc-time">4:00 PM<br/>5:30 PM</div>
-        </div>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="f-logo">Al-Barakah's 🍉</div>
+        <p>Fresh Cut Fruits delivered to your door. Handcrafted bowls made daily with love.</p>
       </div>
-      <div style="background:var(--yellow-light);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:13px;color:var(--green-dark);line-height:1.7">
-        ⚠️ Orders must be confirmed <strong>1½ hours before</strong> the slot. Only pre-confirmed orders are accepted.
+      <div class="footer-col">
+        <h4>📍 Our Location</h4>
+        <div class="address-lines"><strong>Al-Barakah's Fresh Cut Fruits</strong><br />18-05-43, 3rd
+          Line,<br />Kederaswarapeta, Near Mango Market,<br />Vijayawada — 520003<br /><br /><strong>📞 8466949434 /
+            7337466536</strong></div>
       </div>
-    </div>
+      <div class="footer-col">
+        <h4>💬 Follow Us</h4>
+        <div class="social-list">
+          <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRm" class="social-item"
+            target="_blank">
+            <div class="sicon ig">📸</div>
+            <div>
+              <div style="color:white;font-size:14px;font-weight:500">Instagram</div>
+              <div>@albarakahsfreshfruits</div>
+            </div>
+          </a>
 
-    <!-- Address + Hours full width -->
-    <div class="contact-card full reveal">
-      <span class="cc-icon">📍</span>
-      <div class="cc-title">Find Us & Business Hours</div>
-      <div class="address-big">
-        <div class="ab-block">
-          <h4>📍 Our Kitchen</h4>
-          <p>
-            <strong>Al-Barakah's Fresh Cut Fruits</strong><br/>
-            18-05-43, 3rd Line,<br/>
-            Kederaswarapeta,<br/>
-            Near Mango Market,<br/>
-            <strong>Vijayawada — 520003</strong><br/>
-            Andhra Pradesh, India
-          </p>
-        </div>
-        <div class="ab-block">
-          <h4>🕐 Business Hours</h4>
-          <p>
-            <strong>Monday – Saturday</strong><br/>
-            8:30 AM – 9:00 PM<br/><br/>
-            <strong>Sunday</strong><br/>
-            8:30 AM – 5:00 PM<br/><br/>
-            <strong>Delivery:</strong> FREE up to 3 km<br/>
-            ₹9 per km beyond 3 km
-          </p>
+          <a href="https://g.page/r/CUQO1oCaW4juEBI/review" target="_blank" rel="noopener" class="social-item"
+            style="background:linear-gradient(135deg,#4285F4,#34A853)">
+            <div class="sicon" style="background:white;color:#4285F4;font-size:18px;">G</div>
+            <div>
+              <div style="color:white;font-size:14px;font-weight:500">Google Reviews</div>
+              <div>Rate us ★★★★★</div>
+            </div>
+          </a>
+          <a href="https://wa.me/918466949434" class="social-item" target="_blank">
+            <div class="sicon wa">💬</div>
+            <div>
+              <div style="color:white;font-size:14px;font-weight:500">WhatsApp</div>
+              <div>+91 84669 49434</div>
+            </div>
+          </a>
         </div>
       </div>
     </div>
-
-    <!-- Socials full width -->
-    <div class="contact-card full reveal">
-      <span class="cc-icon">🌐</span>
-      <div class="cc-title">Follow Us on Social Media</div>
-      <div class="cc-sub">Stay updated with our daily specials, offers and fresh arrivals!</div>
-      <div class="social-big">
-        <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRmS" target="_blank" class="sb-card sb-ig">
-          <span class="sb-icon">📸</span>
-          <div class="sb-name">Instagram</div>
-          <div class="sb-handle">@albarakahsfreshfruits</div>
-        </a>
-        
-        <a href="https://wa.me/918466949434" target="_blank" class="sb-card sb-wa">
-          <span class="sb-icon">💬</span>
-          <div class="sb-name">WhatsApp</div>
-          <div class="sb-handle">+91 84669 49434</div>
-        </a>
-      </div>
+    <div class="footer-bottom">
+      <p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p>
+      <p>Designed &amp; Developed by Banda Karthik</p>
     </div>
+  </footer>
 
-    <!-- Order CTA -->
-    <div class="contact-card full reveal" style="background:linear-gradient(135deg,var(--green-dark),#1a4a1a);border-color:transparent;text-align:center">
-      <span class="cc-icon">🍓</span>
-      <div class="cc-title" style="color:var(--yellow)">Ready to Order?</div>
-      <div class="cc-sub" style="color:rgba(255,255,255,0.6);max-width:400px;margin:0 auto 28px">Fresh fruit bowls made to order, delivered to your door. Place your order now!</div>
-      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-        <a href="order.html" class="btn-main">🍓 Order Now</a>
-        <a href="https://wa.me/918466949434" target="_blank" class="btn-outline" style="color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.3)">💬 WhatsApp Order</a>
-      </div>
-    </div>
+  <script>
+    const cart = JSON.parse(localStorage.getItem('albarakahCart') || '[]');
+    document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + i.qty, 0);
+    const revEls = document.querySelectorAll('.reveal');
+    revEls.forEach(r => {
+      new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.08 }).observe(r);
+    });
+  </script>
+  <script>
 
-  </div>
-</section>
+    function toggleDark() {
+      document.body.classList.toggle("dark");
+      localStorage.setItem("darkMode", document.body.classList.contains("dark") ? "1" : "0");
+    }
+    if (localStorage.getItem("darkMode") === "1") document.body.classList.add("dark");
 
+    function toggleMenu() {
 
-<!-- GOOGLE REVIEW FLOATING BUTTON -->
-<a class="review-fab" href="https://g.page/r/CUQO1oCaW4juEBI/review" target="_blank" rel="noopener" title="Rate us on Google">
-  <div class="rfab-logo">⭐</div>
-  <div class="rfab-text">
-    Rate Us
-    <span class="rfab-stars">★★★★★</span>
-    <span class="rfab-label">on Google</span>
-  </div>
-</a>
+      const menu = document.getElementById("navLinks");
 
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand"><div class="f-logo">Al-Barakah's 🍉</div><p>Fresh Cut Fruits delivered to your door. Handcrafted bowls made daily with love.</p></div>
-    <div class="footer-col"><h4>📍 Our Location</h4><div class="address-lines"><strong>Al-Barakah's Fresh Cut Fruits</strong><br/>18-05-43, 3rd Line,<br/>Kederaswarapeta, Near Mango Market,<br/>Vijayawada — 520003<br/><br/><strong>📞 8466949434 / 7337466536</strong></div></div>
-    <div class="footer-col"><h4>💬 Follow Us</h4><div class="social-list">
-      <a href="https://www.instagram.com/al_barakahs_fresh_fruits_?igsh=ZjluM2U1aTc2aDRm" class="social-item" target="_blank"><div class="sicon ig">📸</div><div><div style="color:white;font-size:14px;font-weight:500">Instagram</div><div>@albarakahsfreshfruits</div></div></a>
-      
-            <a href="https://g.page/r/CUQO1oCaW4juEBI/review" target="_blank" rel="noopener" class="social-item" style="background:linear-gradient(135deg,#4285F4,#34A853)">
-        <div class="sicon" style="background:white;color:#4285F4;font-size:18px;">G</div>
-        <div><div style="color:white;font-size:14px;font-weight:500">Google Reviews</div><div>Rate us ★★★★★</div></div>
-      </a>
-      <a href="https://wa.me/918466949434" class="social-item" target="_blank"><div class="sicon wa">💬</div><div><div style="color:white;font-size:14px;font-weight:500">WhatsApp</div><div>+91 84669 49434</div></div></a>
-    </div></div>
-  </div>
-  <div class="footer-bottom"><p>© 2026 Al-Barakah's Fresh Cut Fruits. All rights reserved.</p><p>Designed &amp; Developed by Banda Karthik</p></div>
-</footer>
+      menu.classList.toggle("show");
 
-<script>
-  const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
-  document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
-  const revEls = document.querySelectorAll('.reveal');
-  revEls.forEach(r=>{
-    new IntersectionObserver(entries=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-    },{threshold:0.08}).observe(r);
-  });
-</script>
-<script>
+    }
 
-function toggleDark(){
-    document.body.classList.toggle("dark");
-    localStorage.setItem("darkMode", document.body.classList.contains("dark") ? "1" : "0");
-  }
-  if(localStorage.getItem("darkMode") === "1") document.body.classList.add("dark");
-
-  function toggleMenu(){
-
-const menu = document.getElementById("navLinks");
-
-menu.classList.toggle("show");
-
-}
-
-</script>
+  </script>
 </body>
+
 </html>ss

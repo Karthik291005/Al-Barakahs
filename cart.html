@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cart — Al-Barakah's Fresh Cut Fruits</title>
   <link rel="stylesheet" href="shared.css"/>
+  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
+  <link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png"/>
   <style>
     body { padding-top: 72px; }
 
@@ -329,38 +332,6 @@
       .paid-modal { border-radius: 20px; }
       .paid-body { padding: 18px 18px; }
     }
-
-    /* ── STICKY BOTTOM CART BAR ── */
-    body { padding-bottom: 80px; }
-    .bottom-cart-bar {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 1500;
-      background: linear-gradient(135deg, var(--green-dark), #1a4a1a);
-      padding: 12px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      box-shadow: 0 -4px 24px rgba(0,0,0,0.2);
-    }
-    .bcb-left { display: flex; align-items: center; gap: 10px; }
-    .bcb-icon { font-size: 22px; position: relative; }
-    .bcb-badge {
-      position: absolute; top: -6px; right: -8px;
-      background: var(--yellow); color: #111; font-size: 10px;
-      font-weight: 800; border-radius: 50%; width: 18px; height: 18px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .bcb-text { color: rgba(255,255,255,0.8); font-size: 13px; }
-    .bcb-text strong { color: white; font-size: 15px; display: block; }
-    .bcb-btn {
-      background: var(--yellow); color: #111; border: none;
-      padding: 10px 20px; border-radius: 12px; font-size: 14px;
-      font-weight: 800; cursor: pointer; font-family: 'Poppins', sans-serif;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .bcb-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
-    .bcb-btn:disabled {
-      background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.4);
-      cursor: not-allowed; box-shadow: none; transform: none;
-    }
   </style>
 </head>
 <body>
@@ -494,7 +465,7 @@
       <h3>💳 Pay via UPI</h3>
       <p>Complete your payment to confirm order</p>
       <div class="upi-amount" id="upiAmount">₹0</div>
-      <div class="upi-id-display">UPI ID: 7337486536-2@ybl</div>
+      <div class="upi-id-display">UPI ID: 8554b4d32b2143c3ad40@okaxis</div>
     </div>
 
     <!-- Tabs -->
@@ -505,14 +476,24 @@
 
     <!-- Apps Tab -->
     <div class="upi-tab-panel active" id="panelApps">
-      <div style="padding: 28px 24px; text-align: center;">
-        <p style="font-size:13px;color:var(--ink-muted);margin-bottom:20px;line-height:1.7;">
-          Tap below to open your UPI app.<br/>Your device will show all available UPI apps.
-        </p>
-        <button class="upi-any-btn" style="width:100%;margin:0 0 12px;" onclick="openAnyUpi()">
-          📲 Open UPI App to Pay
+      <!-- Detecting spinner (shown briefly) -->
+      <div class="upi-detecting" id="upiDetecting">
+        <span class="detect-spinner">🔍</span>
+        <p>Checking for UPI apps on your device…</p>
+      </div>
+
+      <!-- Apps grid (shown after detection) -->
+      <div id="upiAppsGrid" style="display:none">
+        <div class="upi-apps" id="upiAppsContainer"></div>
+        <button class="upi-any-btn" onclick="openAnyUpi()">
+          📲 Open Any UPI App
         </button>
-        <p style="font-size:11px;color:var(--ink-muted);">GPay · PhonePe · Paytm · BHIM · any UPI app</p>
+      </div>
+
+      <!-- No apps found fallback -->
+      <div class="upi-no-apps" id="upiNoApps" style="display:none">
+        <p>😕 No UPI apps detected on this device.<br/>Please scan the QR code or use the UPI ID to pay.</p>
+        <button class="upi-any-btn" onclick="switchUpiTab('scan')">📷 Switch to QR Scanner</button>
       </div>
     </div>
 
@@ -525,7 +506,7 @@
         <img src="scanner.jpg.jpeg" alt="UPI QR Code"/>
         <p>Scan this QR with <strong>GPay, PhonePe, Paytm, BHIM</strong> or any UPI app</p>
         <div class="upi-id-copy" onclick="copyUpiId()">
-          📋 7337486536-2@ybl &nbsp;(tap to copy)
+          📋 8554b4d32b2143c3ad40@okaxis &nbsp;(tap to copy)
         </div>
         <p id="copyConfirm" style="font-size:12px;color:var(--green);font-weight:600;margin-top:8px;display:none;">✅ UPI ID copied!</p>
       </div>
@@ -580,18 +561,6 @@
   </div>
 </div>
 
-<!-- STICKY BOTTOM CART BAR -->
-<div class="bottom-cart-bar" id="bottomCartBar">
-  <div class="bcb-left">
-    <div class="bcb-icon">🛒<span class="bcb-badge" id="bcbCount">0</span></div>
-    <div class="bcb-text">
-      <strong id="bcbTotal">₹0</strong>
-      <span id="bcbLabel">Your cart</span>
-    </div>
-  </div>
-  <button class="bcb-btn" id="bcbBtn" onclick="openModal()" disabled>Add items</button>
-</div>
-
 <footer>
   <div class="footer-grid">
     <div class="footer-brand"><div class="f-logo">Al-Barakah's</div><p>Fresh Cut Fruits delivered to your door. Handcrafted bowls made daily with love.</p></div>
@@ -606,8 +575,8 @@
 
 <script>
   let selectedPayment = '';
-  const UPI_ID = "7337486536-2@ybl";
-  const UPI_ID_DISPLAY = "7337486536-2@ybl";
+  const UPI_ID = "8554b4d32b2143c3ad40@okaxis";
+  const UPI_ID_DISPLAY = "8554b4d32b2143c3ad40@okaxis";
   const UPI_NAME = "Al-Barakah%20Fruits";
   const WA_NUMBER = "918466949434";
   let pendingWaMessage = '';
@@ -736,22 +705,36 @@
   }
 
   function buildUpiLink(app, amount, isAndroid, isIOS) {
-    const pa = encodeURIComponent(UPI_ID);
+    const pa = UPI_ID;
     const pn = UPI_NAME;
-    const am = parseFloat(amount).toFixed(2); // UPI requires 2 decimal places
+    const am = amount;
     const tn = "Al-Barakah%20Order";
-    const cu = "INR";
 
-    // upi:// scheme works on both Android and iOS for all UPI apps
-    // Each app also has its own scheme as a fallback
-    const appSchemes = {
-      gpay:    `gpay://upi/pay?pa=${pa}&pn=${pn}&am=${am}&cu=${cu}&tn=${tn}`,
-      phonepe: `phonepe://pay?pa=${pa}&pn=${pn}&am=${am}&cu=${cu}&tn=${tn}`,
-      paytm:   `paytmmp://pay?pa=${pa}&pn=${pn}&am=${am}&cu=${cu}&tn=${tn}`,
-      bhim:    `upi://pay?pa=${pa}&pn=${pn}&am=${am}&cu=${cu}&tn=${tn}`,
-    };
+    if (isAndroid) {
+      // Android intent links — OS routes to correct app or shows chooser
+      const packages = {
+        gpay:    'com.google.android.apps.nbu.paisa.user',
+        phonepe: 'com.phonepe.app',
+        paytm:   'net.one97.paytm',
+        bhim:    'in.org.npci.upiapp',
+      };
+      const pkg = packages[app];
+      return `intent://pay?pa=${pa}&pn=${pn}&am=${am}&cu=INR&tn=${tn}#Intent;scheme=upi;package=${pkg};end`;
+    }
 
-    return appSchemes[app] || `upi://pay?pa=${pa}&pn=${pn}&am=${am}&cu=${cu}&tn=${tn}`;
+    if (isIOS) {
+      // iOS universal UPI deep links
+      const iosSchemes = {
+        gpay:    `gpay://upi/pay?pa=${pa}&pn=${pn}&am=${am}&cu=INR&tn=${tn}`,
+        phonepe: `phonepe://pay?pa=${pa}&pn=${pn}&am=${am}&cu=INR&tn=${tn}`,
+        paytm:   `paytmmp://pay?pa=${pa}&pn=${pn}&am=${am}&cu=INR&tn=${tn}`,
+        bhim:    `upi://pay?pa=${pa}&pn=${pn}&am=${am}&cu=INR&tn=${tn}`,
+      };
+      return iosSchemes[app] || `upi://pay?pa=${pa}&pn=${pn}&am=${am}&cu=INR&tn=${tn}`;
+    }
+
+    // Generic UPI deep link fallback
+    return `upi://pay?pa=${pa}&pn=${pn}&am=${am}&cu=INR&tn=${tn}`;
   }
 
   function openUpiApp(appId, isAndroid, isIOS) {
@@ -769,14 +752,23 @@
       closeUpiModal();
       document.getElementById('paidOverlay').classList.add('open');
       document.body.style.overflow = 'hidden';
-    }, 6000);
+    }, 2500);
   }
 
   function openAnyUpi() {
-    const pa = encodeURIComponent(UPI_ID);
+    // Generic UPI intent — Android will show app chooser with all UPI apps
+    const isAndroid = /android/i.test(navigator.userAgent);
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const pa = UPI_ID;
     const pn = UPI_NAME;
-    const am = parseFloat(pendingTotal).toFixed(2);
-    const link = `upi://pay?pa=${pa}&pn=${pn}&am=${am}&cu=INR&tn=Al-Barakah%20Order`;
+    const am = pendingTotal;
+
+    let link;
+    if (isAndroid) {
+      link = `intent://pay?pa=${pa}&pn=${pn}&am=${am}&cu=INR&tn=Al-Barakah%20Order#Intent;scheme=upi;end`;
+    } else {
+      link = `upi://pay?pa=${pa}&pn=${pn}&am=${am}&cu=INR&tn=Al-Barakah%20Order`;
+    }
 
     window.location.href = link;
 
@@ -784,7 +776,7 @@
       closeUpiModal();
       document.getElementById('paidOverlay').classList.add('open');
       document.body.style.overflow = 'hidden';
-    }, 6000);
+    }, 2500);
   }
 
   function switchUpiTab(tab) {
@@ -798,7 +790,7 @@
     navigator.clipboard.writeText(UPI_ID_DISPLAY).then(() => {
       const el = document.getElementById('copyConfirm');
       el.style.display = 'block';
-      setTimeout(() => { el.style.display = 'none'; }, 6000);
+      setTimeout(() => { el.style.display = 'none'; }, 2500);
     }).catch(() => {
       // Fallback for older browsers
       const ta = document.createElement('textarea');
@@ -809,7 +801,7 @@
       document.body.removeChild(ta);
       const el = document.getElementById('copyConfirm');
       el.style.display = 'block';
-      setTimeout(() => { el.style.display = 'none'; }, 6000);
+      setTimeout(() => { el.style.display = 'none'; }, 2500);
     });
   }
 
@@ -865,7 +857,6 @@
         </div>
       </div>`;
 
-    updateBottomBar();
     const list = document.getElementById('itemsList');
     cart.forEach((item,idx)=>{
       const div = document.createElement('div');
@@ -888,28 +879,6 @@
         </div>`;
       list.appendChild(div);
     });
-  }
-
-  function updateBottomBar(){
-    const cart = JSON.parse(localStorage.getItem('albarakahCart')||'[]');
-    const count = cart.reduce((s,i)=>s+i.qty,0);
-    const subtotal = cart.reduce((s,i)=>s+(i.price*i.qty),0);
-    const total = subtotal + selectedDeliveryCharge;
-
-    document.getElementById('bcbCount').textContent = count;
-    document.getElementById('bcbTotal').textContent = '\u20B9' + total;
-
-    const btn = document.getElementById('bcbBtn');
-    const label = document.getElementById('bcbLabel');
-    if(count === 0){
-      btn.textContent = 'Add items';
-      btn.disabled = true;
-      label.textContent = 'Your cart is empty';
-    } else {
-      btn.textContent = 'Checkout →';
-      btn.disabled = false;
-      label.textContent = count + (count===1?' item':' items');
-    }
   }
 
   function cartQty(idx, delta){
@@ -1024,12 +993,19 @@
     closeModal();
 
     if(selectedPayment === 'UPI / Online'){
-      // Open UPI modal
+      // Reset UPI modal state
       document.getElementById('upiAmount').textContent = `₹${finalTotal}`;
       document.getElementById('scannerAmount').textContent = finalTotal;
+      document.getElementById('upiDetecting').style.display = 'block';
+      document.getElementById('upiAppsGrid').style.display = 'none';
+      document.getElementById('upiNoApps').style.display = 'none';
       switchUpiTab('apps');
+
       document.getElementById('upiModal').classList.add('open');
       document.body.style.overflow = 'hidden';
+
+      // Start app detection
+      detectUpiApps();
     } else {
       sendWhatsApp();
       setTimeout(()=>renderCart(), 300);
@@ -1053,7 +1029,6 @@
 
   function skipUpiAndWhatsapp(){
     closeUpiModal();
-    pendingWaMessage = pendingWaMessage.replace('*Payment Mode:* UPI / Online', '*Payment Mode:* Cash on Delivery');
     sendWhatsApp();
     renderCart();
   }
@@ -1069,7 +1044,6 @@
   }
 
   renderCart();
-  updateBottomBar();
 </script>
 <script>
   function toggleDark(){
